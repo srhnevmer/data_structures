@@ -20,7 +20,7 @@ func TestAdd(t *testing.T) {
 	}
 
 	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("Test case number: %d", i+1), func(t *testing.T) {
+		t.Run(fmt.Sprintf("%s%d", template, i+1), func(t *testing.T) {
 			if tc.size != tc.list.size {
 				t.Errorf("Expected size: %d got %d", tc.size, tc.list.size)
 			}
