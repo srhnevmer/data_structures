@@ -10,22 +10,6 @@ type list struct {
 	size int
 }
 
-func (l *list) add(val int) {
-	l.size++
-	n := &node{nil, val}
-
-	switch l.head {
-	case nil:
-		l.head = n
-	default:
-		curr := l.head
-		for curr.next != nil {
-			curr = curr.next
-		}
-		curr.next = n
-	}
-}
-
 func (l *list) traversal() []int {
 	if l.head == nil {
 		return make([]int, 0)
