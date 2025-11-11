@@ -6,7 +6,7 @@ import (
 )
 
 func TestAdd(t *testing.T) {
-	tests := []struct {
+	testCases := []struct {
 		list
 		size      int
 		lastValue int
@@ -16,14 +16,14 @@ func TestAdd(t *testing.T) {
 		{list: fillList(10, 20, 30), size: 3, lastValue: 30},
 	}
 
-	for i, tt := range tests {
+	for i, tc := range testCases {
 		t.Run(fmt.Sprintf("Test number: %d", i+1), func(t *testing.T) {
-			if tt.size != tt.list.size {
-				t.Errorf("Expected size: %d got %d", tt.size, tt.list.size)
+			if tc.size != tc.list.size {
+				t.Errorf("Expected size: %d got %d", tc.size, tc.list.size)
 			}
 
-			if lv := getLastValList(tt.list); tt.lastValue != lv {
-				t.Errorf("Expected value: %d got %d", tt.lastValue, lv)
+			if lv := getLastValList(tc.list); tc.lastValue != lv {
+				t.Errorf("Expected value: %d got %d", tc.lastValue, lv)
 			}
 		})
 	}
