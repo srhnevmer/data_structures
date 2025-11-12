@@ -7,11 +7,11 @@ type node struct {
 
 type list struct {
 	head *node
-	size int
+	size uint
 }
 
-func (l *list) insert(idx, val int) {
-	if idx < 0 || l.size < idx {
+func (l *list) insert(idx uint, val int) {
+	if l.size < idx {
 		return
 	}
 
@@ -26,7 +26,7 @@ func (l *list) insert(idx, val int) {
 		l.head = n
 	default:
 		curr := l.head
-		for prevIdx := 0; prevIdx < idx-1; prevIdx++ {
+		for prevIdx := 0; prevIdx < int(idx)-1; prevIdx++ {
 			curr = curr.next
 		}
 
