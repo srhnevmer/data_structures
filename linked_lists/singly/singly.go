@@ -74,6 +74,5 @@ func (l *list) search(val int) bool {
 			return true
 		}
 	}
-
 	return false
 }
