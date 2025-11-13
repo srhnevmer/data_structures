@@ -38,5 +38,4 @@ func (l *list) insert(idx uint, val int) {
 		n.next = curr.next
 		curr.next = n
 	}
-
 }
