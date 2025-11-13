@@ -6,10 +6,12 @@ import (
 	"testing"
 )
 
-const template = "Test case number:"
+const msgTemplate = "Test case number:"
+
+var nums = []int{10, 20, 30}
 
 func TestInsert(t *testing.T) {
-	val, nums := 50, []int{10, 20, 30}
+	val := 50
 	testCases := []struct {
 		list  list
 		size  uint
@@ -27,7 +29,7 @@ func TestInsert(t *testing.T) {
 	}
 
 	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", template, i+1), func(t *testing.T) {
+		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
 
 			if tc.size != tc.list.size {
@@ -61,4 +63,24 @@ func fillList(values ...int) list {
 	}
 
 	return l
+}
+
+func TestTraverse(t *testing.T) {
+	testCases := []struct {
+		list
+		want []int
+	}{
+		{list: list{}, want: []int{}},
+		{list: fillList(nums[:1]...), want: []int{10}},
+		{list: fillList(nums[:2]...), want: []int{10, 20}},
+		{list: fillList(nums...), want: []int{10, 20, 30}},
+	}
+
+	for i, tc := range testCases {
+		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
+			if got := tc.list.traverse(); slices.Compare(tc.want, got) != 0 {
+				t.Errorf("Expected result: %v got: %v", tc.want, got)
+			}
+		})
+	}
 }
