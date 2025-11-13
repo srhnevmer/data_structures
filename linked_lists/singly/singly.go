@@ -46,28 +46,23 @@ func (l *list) delete(idx uint) {
 	}
 
 	l.size--
-
 	switch {
 	case l.size == 1:
 		l.head = nil
 	case idx == 0:
-		target := l.head
-		l.head = target.next
-		target.next = nil
+		t := l.head
+		l.head = t.next
+		t.next = nil
 	default:
+		var prev *node
 		curr := l.head
-		for i := uint(0); i < idx-1; i++ {
+		for range idx {
+			prev = curr
 			curr = curr.next
 		}
 
-		target := curr.next
-		if target == nil {
-			curr.next = nil
-			return
-		}
-
-		curr.next = target.next
-		target.next = nil
+		prev.next = curr.next
+		curr.next = nil
 	}
 }
 
