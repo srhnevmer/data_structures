@@ -56,12 +56,10 @@ func fillList(values []int) list {
 	l, values := list{}, values[1:]
 	l.head, l.size = n, 1
 
-	for i, curr := 0, l.head; i < len(values); i++ {
+	for i, curr := 0, l.head; i < len(values); i, curr = i+1, curr.next {
 		curr.next = &node{nil, values[i]}
-		curr = curr.next
 		l.size++
 	}
-
 	return l
 }
 
