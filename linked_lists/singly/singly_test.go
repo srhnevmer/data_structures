@@ -19,13 +19,13 @@ func TestInsert(t *testing.T) {
 		size  uint
 		want  []int
 	}{
-		{list: list{}, index: 1, value: val, size: 0, want: []int{}},                          // empty list invalid index
-		{list: list{}, index: 0, value: val, size: 1, want: []int{50}},                        // empty list valid index
-		{list: fillList(nums...), index: 4, value: val, size: 3, want: []int{10, 20, 30}},     // filled list invalid index
-		{list: fillList(nums...), index: 0, value: val, size: 4, want: []int{50, 10, 20, 30}}, // filled list valid index
-		{list: fillList(nums...), index: 1, value: val, size: 4, want: []int{10, 50, 20, 30}},
-		{list: fillList(nums...), index: 2, value: val, size: 4, want: []int{10, 20, 50, 30}},
-		{list: fillList(nums...), index: 3, value: val, size: 4, want: []int{10, 20, 30, 50}},
+		{list: list{}, index: 1, value: val, size: 0, want: []int{}},                       // empty list invalid index
+		{list: list{}, index: 0, value: val, size: 1, want: []int{50}},                     // empty list valid index
+		{list: fillList(nums), index: 4, value: val, size: 3, want: []int{10, 20, 30}},     // filled list invalid index
+		{list: fillList(nums), index: 0, value: val, size: 4, want: []int{50, 10, 20, 30}}, // filled list valid index
+		{list: fillList(nums), index: 1, value: val, size: 4, want: []int{10, 50, 20, 30}},
+		{list: fillList(nums), index: 2, value: val, size: 4, want: []int{10, 20, 50, 30}},
+		{list: fillList(nums), index: 3, value: val, size: 4, want: []int{10, 20, 30, 50}},
 	}
 
 	for i, tc := range testCases {
@@ -51,7 +51,7 @@ func extractValues(l list) []int {
 	return r
 }
 
-func fillList(values ...int) list {
+func fillList(values []int) list {
 	n := &node{nil, values[0]}
 	l, values := list{}, values[1:]
 	l.head, l.size = n, 1
@@ -72,14 +72,14 @@ func TestDelete(t *testing.T) {
 		size  uint
 		want  []int
 	}{
-		{list: list{}, index: 0, size: 0, want: []int{}},                  // empty list valid index
-		{list: list{}, index: 1, size: 0, want: []int{}},                  // empty list invalid index
-		{list: fillList(nums[:1]...), index: 0, size: 0, want: []int{}},   // filled list valid index
-		{list: fillList(nums[:1]...), index: 1, size: 1, want: []int{10}}, // filled list invalid index
-		{list: fillList(nums...), index: 0, size: 2, want: []int{20, 30}},
-		{list: fillList(nums...), index: 1, size: 2, want: []int{10, 30}},
-		{list: fillList(nums...), index: 2, size: 2, want: []int{10, 20}},
-		{list: fillList(nums...), index: 3, size: 3, want: []int{10, 20, 30}}, // filled list invalid index
+		{list: list{}, index: 0, size: 0, want: []int{}},               // empty list valid index
+		{list: list{}, index: 1, size: 0, want: []int{}},               // empty list invalid index
+		{list: fillList(nums[:1]), index: 0, size: 0, want: []int{}},   // filled list valid index
+		{list: fillList(nums[:1]), index: 1, size: 1, want: []int{10}}, // filled list invalid index
+		{list: fillList(nums), index: 0, size: 2, want: []int{20, 30}},
+		{list: fillList(nums), index: 1, size: 2, want: []int{10, 30}},
+		{list: fillList(nums), index: 2, size: 2, want: []int{10, 20}},
+		{list: fillList(nums), index: 3, size: 3, want: []int{10, 20, 30}}, // filled list invalid index
 	}
 
 	for i, tc := range testCases {
@@ -102,9 +102,9 @@ func TestTraverse(t *testing.T) {
 		want []int
 	}{
 		{list: list{}, want: []int{}},
-		{list: fillList(nums[:1]...), want: []int{10}},
-		{list: fillList(nums[:2]...), want: []int{10, 20}},
-		{list: fillList(nums...), want: []int{10, 20, 30}},
+		{list: fillList(nums[:1]), want: []int{10}},
+		{list: fillList(nums[:2]), want: []int{10, 20}},
+		{list: fillList(nums), want: []int{10, 20, 30}},
 	}
 
 	for i, tc := range testCases {
@@ -123,11 +123,11 @@ func TestSearch(t *testing.T) {
 		want  bool
 	}{
 		{list: list{}, value: 30, want: false},
-		{list: fillList(nums[:1]...), value: 30, want: false},
-		{list: fillList(nums...), value: 10, want: true},
-		{list: fillList(nums...), value: 20, want: true},
-		{list: fillList(nums...), value: 30, want: true},
-		{list: fillList(nums...), value: 50, want: false},
+		{list: fillList(nums[:1]), value: 30, want: false},
+		{list: fillList(nums), value: 10, want: true},
+		{list: fillList(nums), value: 20, want: true},
+		{list: fillList(nums), value: 30, want: true},
+		{list: fillList(nums), value: 50, want: false},
 	}
 
 	for i, tc := range testCases {
