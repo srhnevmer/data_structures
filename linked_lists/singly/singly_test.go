@@ -14,15 +14,15 @@ func TestInsert(t *testing.T) {
 	val := 50
 	testCases := []struct {
 		list  list
-		size  uint
 		index uint
 		value int
+		size  uint
 		want  []int
 	}{
-		{list: list{}, index: 1, value: val, size: 0, want: []int{}},                          // empty list invalid idx
-		{list: list{}, index: 0, value: val, size: 1, want: []int{50}},                        // empty list valid idx
-		{list: fillList(nums...), index: 4, value: val, size: 3, want: []int{10, 20, 30}},     // filled list invalid idx
-		{list: fillList(nums...), index: 0, value: val, size: 4, want: []int{50, 10, 20, 30}}, // filled list valid idx
+		{list: list{}, index: 1, value: val, size: 0, want: []int{}},                          // empty list invalid index
+		{list: list{}, index: 0, value: val, size: 1, want: []int{50}},                        // empty list valid index
+		{list: fillList(nums...), index: 4, value: val, size: 3, want: []int{10, 20, 30}},     // filled list invalid index
+		{list: fillList(nums...), index: 0, value: val, size: 4, want: []int{50, 10, 20, 30}}, // filled list valid index
 		{list: fillList(nums...), index: 1, value: val, size: 4, want: []int{10, 50, 20, 30}},
 		{list: fillList(nums...), index: 2, value: val, size: 4, want: []int{10, 20, 50, 30}},
 		{list: fillList(nums...), index: 3, value: val, size: 4, want: []int{10, 20, 30, 50}},
@@ -63,6 +63,37 @@ func fillList(values ...int) list {
 	}
 
 	return l
+}
+
+func TestDelete(t *testing.T) {
+	testCases := []struct {
+		list  list
+		index uint
+		size  uint
+		want  []int
+	}{
+		{list: list{}, index: 0, size: 0, want: []int{}},                  // empty list valid index
+		{list: list{}, index: 1, size: 0, want: []int{}},                  // empty list invalid index
+		{list: fillList(nums[:1]...), index: 0, size: 0, want: []int{}},   // filled list valid index
+		{list: fillList(nums[:1]...), index: 1, size: 1, want: []int{10}}, // filled list invalid index
+		{list: fillList(nums...), index: 0, size: 2, want: []int{20, 30}},
+		{list: fillList(nums...), index: 1, size: 2, want: []int{10, 30}},
+		{list: fillList(nums...), index: 2, size: 2, want: []int{10, 20}},
+		{list: fillList(nums...), index: 3, size: 3, want: []int{10, 20, 30}}, // filled list invalid index
+	}
+
+	for i, tc := range testCases {
+		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
+			tc.list.delete(tc.index)
+			if tc.size != tc.list.size {
+				t.Fatalf("Expected size: %d got: %d", tc.size, tc.list.size)
+			}
+
+			if got := extractValues(tc.list); slices.Compare(tc.want, got) != 0 {
+				t.Errorf("Expected result: %v got %v", tc.want, got)
+			}
+		})
+	}
 }
 
 func TestTraverse(t *testing.T) {
