@@ -39,3 +39,11 @@ func (l *list) insert(idx uint, val int) {
 		curr.next = n
 	}
 }
+
+func (l *list) traverse() []int {
+	r := make([]int, 0, l.size)
+	for curr := l.head; curr != nil; curr = curr.next {
+		r = append(r, curr.value)
+	}
+	return r
+}
