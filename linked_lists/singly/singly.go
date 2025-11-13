@@ -67,3 +67,13 @@ func (l *list) traverse() []int {
 	}
 	return r
 }
+
+func (l *list) search(val int) bool {
+	for curr := l.head; curr != nil; curr = curr.next {
+		if curr.value == val {
+			return true
+		}
+	}
+
+	return false
+}
