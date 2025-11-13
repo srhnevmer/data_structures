@@ -115,3 +115,26 @@ func TestTraverse(t *testing.T) {
 		})
 	}
 }
+
+func TestSearch(t *testing.T) {
+	testCases := []struct {
+		list
+		value int
+		want  bool
+	}{
+		{list: list{}, value: 30, want: false},
+		{list: fillList(nums[:1]...), value: 30, want: false},
+		{list: fillList(nums...), value: 10, want: true},
+		{list: fillList(nums...), value: 20, want: true},
+		{list: fillList(nums...), value: 30, want: true},
+		{list: fillList(nums...), value: 50, want: false},
+	}
+
+	for i, tc := range testCases {
+		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
+			if got := tc.list.search(tc.value); tc.want != got {
+				t.Errorf("Expected result: %t got: %t", tc.want, got)
+			}
+		})
+	}
+}
