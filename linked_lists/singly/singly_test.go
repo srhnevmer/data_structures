@@ -6,12 +6,13 @@ import (
 	"testing"
 )
 
-const msgTemplate = "Test case number:"
-
-var nums = []int{10, 20, 30}
+var (
+	val              = 50
+	nums             = []int{10, 20, 30}
+	testNameTemplate = "Test case number:"
+)
 
 func TestInsert(t *testing.T) {
-	val := 50
 	testCases := []struct {
 		list  list
 		index uint
@@ -29,7 +30,7 @@ func TestInsert(t *testing.T) {
 	}
 
 	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
+		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
 
 			if tc.size != tc.list.size {
@@ -81,7 +82,7 @@ func TestDelete(t *testing.T) {
 	}
 
 	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
+		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			tc.list.delete(tc.index)
 			if tc.size != tc.list.size {
 				t.Fatalf("Expected size: %d got: %d", tc.size, tc.list.size)
@@ -106,7 +107,7 @@ func TestTraverse(t *testing.T) {
 	}
 
 	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
+		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			if got := tc.list.traverse(); slices.Compare(tc.want, got) != 0 {
 				t.Errorf("Expected result: %v got: %v", tc.want, got)
 			}
@@ -120,16 +121,16 @@ func TestSearch(t *testing.T) {
 		value int
 		want  bool
 	}{
-		{list: list{}, value: 30, want: false},
-		{list: fillList(nums[:1]), value: 30, want: false},
+		{list: list{}, value: val, want: false},
+		{list: fillList(nums[:1]), value: val, want: false},
 		{list: fillList(nums), value: 10, want: true},
 		{list: fillList(nums), value: 20, want: true},
 		{list: fillList(nums), value: 30, want: true},
-		{list: fillList(nums), value: 50, want: false},
+		{list: fillList(nums), value: val, want: false},
 	}
 
 	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
+		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			if got := tc.list.search(tc.value); tc.want != got {
 				t.Errorf("Expected result: %t got: %t", tc.want, got)
 			}
@@ -149,7 +150,7 @@ func TestReverse(t *testing.T) {
 	}
 
 	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
+		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			tc.list.reverse()
 			if got := extractValues(tc.list); slices.Compare(tc.want, got) != 0 {
 				t.Errorf("Expected result: %v got: %v", tc.want, got)
