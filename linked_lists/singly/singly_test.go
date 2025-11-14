@@ -136,3 +136,24 @@ func TestSearch(t *testing.T) {
 		})
 	}
 }
+
+func TestReverse(t *testing.T) {
+	testCases := []struct {
+		list
+		want []int
+	}{
+		{list: list{}, want: []int{}},
+		{list: fillList(nums[:1]), want: []int{10}},
+		{list: fillList(nums[:2]), want: []int{20, 10}},
+		{list: fillList(nums), want: []int{30, 20, 10}},
+	}
+
+	for i, tc := range testCases {
+		t.Run(fmt.Sprintf("%s%d", msgTemplate, i+1), func(t *testing.T) {
+			tc.list.reverse()
+			if got := extractValues(tc.list); slices.Compare(tc.want, got) != 0 {
+				t.Errorf("Expected result: %v got: %v", tc.want, got)
+			}
+		})
+	}
+}
