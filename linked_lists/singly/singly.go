@@ -76,3 +76,16 @@ func (l *list) search(val int) bool {
 	}
 	return false
 }
+
+func (l *list) reverse() {
+	var prev *node
+	curr := l.head
+
+	for curr != nil {
+		next := curr.next
+		curr.next = prev
+		prev = curr
+		curr = next
+	}
+	l.head = prev
+}
