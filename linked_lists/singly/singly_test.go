@@ -32,10 +32,7 @@ func TestInsert(t *testing.T) {
 	for i, tc := range testCases {
 		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
-
-			if tc.size != tc.list.size {
-				t.Fatalf("Expected size: %d got: %d", tc.size, tc.list.size)
-			}
+			assertSize(t, tc.size, tc.list.size)
 
 			if v := extractValues(tc.list); slices.Compare(tc.want, v) != 0 {
 				t.Errorf("Expected result: %v got %v", tc.want, v)
@@ -64,6 +61,14 @@ func fillList(values []int) list {
 	return l
 }
 
+// assert
+func assertSize(t testing.TB, want, got uint) {
+	t.Helper()
+	if want != got {
+		t.Fatalf("Expected size: %d got: %d", want, got)
+	}
+}
+
 func TestDelete(t *testing.T) {
 	testCases := []struct {
 		list  list
@@ -84,9 +89,7 @@ func TestDelete(t *testing.T) {
 	for i, tc := range testCases {
 		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			tc.list.delete(tc.index)
-			if tc.size != tc.list.size {
-				t.Fatalf("Expected size: %d got: %d", tc.size, tc.list.size)
-			}
+			assertSize(t, tc.size, tc.list.size)
 
 			if got := extractValues(tc.list); slices.Compare(tc.want, got) != 0 {
 				t.Errorf("Expected result: %v got %v", tc.want, got)
