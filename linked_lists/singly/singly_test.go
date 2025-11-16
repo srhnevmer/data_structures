@@ -33,39 +33,8 @@ func TestInsert(t *testing.T) {
 		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
 			assertSize(t, tc.size, tc.list.size)
-
-			if v := extractValues(tc.list); slices.Compare(tc.want, v) != 0 {
-				t.Errorf("Expected result: %v got %v", tc.want, v)
-			}
+			assertValues(t, tc.want, extractValues(tc.list))
 		})
-	}
-}
-
-func extractValues(l list) []int {
-	r := make([]int, 0, l.size)
-	for curr := l.head; curr != nil; curr = curr.next {
-		r = append(r, curr.value)
-	}
-	return r
-}
-
-func fillList(values []int) list {
-	n := &node{nil, values[0]}
-	l, values := list{}, values[1:]
-	l.head, l.size = n, 1
-
-	for i, curr := 0, l.head; i < len(values); i, curr = i+1, curr.next {
-		curr.next = &node{nil, values[i]}
-		l.size++
-	}
-	return l
-}
-
-// assert
-func assertSize(t testing.TB, want, got uint) {
-	t.Helper()
-	if want != got {
-		t.Fatalf("Expected size: %d got: %d", want, got)
 	}
 }
 
@@ -90,10 +59,7 @@ func TestDelete(t *testing.T) {
 		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			tc.list.delete(tc.index)
 			assertSize(t, tc.size, tc.list.size)
-
-			if got := extractValues(tc.list); slices.Compare(tc.want, got) != 0 {
-				t.Errorf("Expected result: %v got %v", tc.want, got)
-			}
+			assertValues(t, tc.want, extractValues(tc.list))
 		})
 	}
 }
@@ -111,9 +77,7 @@ func TestTraverse(t *testing.T) {
 
 	for i, tc := range testCases {
 		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
-			if got := tc.list.traverse(); slices.Compare(tc.want, got) != 0 {
-				t.Errorf("Expected result: %v got: %v", tc.want, got)
-			}
+			assertValues(t, tc.want, tc.list.traverse())
 		})
 	}
 }
@@ -154,9 +118,41 @@ func TestReverse(t *testing.T) {
 	for i, tc := range testCases {
 		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
 			tc.list.reverse()
-			if got := extractValues(tc.list); slices.Compare(tc.want, got) != 0 {
-				t.Errorf("Expected result: %v got: %v", tc.want, got)
-			}
+			assertValues(t, tc.want, extractValues(tc.list))
 		})
+	}
+}
+
+func extractValues(l list) []int {
+	r := make([]int, 0, l.size)
+	for curr := l.head; curr != nil; curr = curr.next {
+		r = append(r, curr.value)
+	}
+	return r
+}
+
+func fillList(values []int) list {
+	n := &node{nil, values[0]}
+	l, values := list{}, values[1:]
+	l.head, l.size = n, 1
+
+	for i, curr := 0, l.head; i < len(values); i, curr = i+1, curr.next {
+		curr.next = &node{nil, values[i]}
+		l.size++
+	}
+	return l
+}
+
+func assertSize(t testing.TB, want, got uint) {
+	t.Helper()
+	if want != got {
+		t.Fatalf("Expected size: %d got: %d", want, got)
+	}
+}
+
+func assertValues(t testing.TB, want, got []int) {
+	t.Helper()
+	if slices.Compare(want, got) != 0 {
+		t.Errorf("Expected result: %v, got: %v", want, got)
 	}
 }
