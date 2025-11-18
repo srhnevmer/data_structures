@@ -73,7 +73,7 @@ func TestInsert(t *testing.T) {
 			size:   4,
 			index:  3,
 			value:  val,
-			values: []int{10, 20, 30, 40},
+			values: []int{10, 20, 30, val},
 		},
 	}
 	for i, tc := range testCases {
