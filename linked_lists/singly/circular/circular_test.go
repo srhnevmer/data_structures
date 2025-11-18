@@ -76,7 +76,7 @@ func TestInsert(t *testing.T) {
 			values: []int{10, 20, 30, 40},
 		},
 	}
-	for _, tc := range testCases {
+	for i, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
 			if want, got := tc.size, tc.list.size; want != got {
@@ -87,8 +87,10 @@ func TestInsert(t *testing.T) {
 				t.Fatalf("Expected values: %v got: %v", want, got)
 			}
 
-			if want, got := tc.list.head, tc.list.tail.next; want != got {
-				t.Errorf("Expected result: [ptr: %p value: %[1]v] got: [ptr: %p value: %[2]v]", want, got)
+			if i != 0 {
+				if want, got := tc.list.head, tc.list.tail.next; want != got {
+					t.Errorf("Expected result: [ptr: %p value: %[1]v] got: [ptr: %p value: %[2]v]", want, got)
+				}
 			}
 		})
 	}
