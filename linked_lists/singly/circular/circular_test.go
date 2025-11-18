@@ -106,7 +106,7 @@ func getFilledList() list {
 
 func getValuesFromList(l list) []int {
 	values := make([]int, 0, l.size)
-	for curr := l.head; curr != nil; curr = curr.next {
+	for i, curr := uint(0), l.head; i < l.size; i, curr = i+1, curr.next {
 		values = append(values, curr.value)
 	}
 	return values
