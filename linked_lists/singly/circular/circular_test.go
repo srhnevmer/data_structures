@@ -45,7 +45,7 @@ func assertValues(t testing.TB, want, got []int) {
 
 func assertPointer(t testing.TB, want, got *node) {
 	if want != got {
-		t.Errorf("Expected result: [ptr: %p val: %d] got: [ptr: %p val: %d]", want, want.value, got, got.value)
+		t.Errorf("Expected result: [ptr: %p val: %[1]v] got: [ptr: %p val: %[2]v]", want, got)
 	}
 }
 
