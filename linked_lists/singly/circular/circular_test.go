@@ -64,3 +64,11 @@ func getPtrFromLastNode(l list) *node {
 	}
 	return curr.next
 }
+
+func fillList(values []int) list {
+	l := list{}
+	for i := range values {
+		l.insert(uint(i), values[i])
+	}
+	return l
+}
