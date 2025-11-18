@@ -83,7 +83,7 @@ func TestInsert(t *testing.T) {
 				t.Fatalf("Expected size: %d got: %d", want, got)
 			}
 
-			if want, got := tc.values, []int{}; slices.Compare(want, got) != 0 {
+			if want, got := tc.values, getValuesFromList(tc.list); slices.Compare(want, got) != 0 {
 				t.Fatalf("Expected values: %v got: %v", want, got)
 			}
 
@@ -100,4 +100,12 @@ func getFilledList() list {
 		l.insert(uint(i), values[i])
 	}
 	return l
+}
+
+func getValuesFromList(l list) []int {
+	values := make([]int, 0, l.size)
+	for curr := l.head; curr != nil; curr = curr.next {
+		values = append(values, curr.value)
+	}
+	return values
 }
