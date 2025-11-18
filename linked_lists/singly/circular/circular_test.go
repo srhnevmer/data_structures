@@ -27,11 +27,39 @@ func TestInsert(t *testing.T) {
 		assertValues(t, []int{val}, getValues(l))
 		assertPointer(t, l.head, getPtrFromLastNode(l))
 	})
-	t.Run("Insert into the filled list at the first index", func(t *testing.T) {
+	t.Run("Insert into the filled list at the zero index", func(t *testing.T) {
 		l := fillList(values)
 		l.insert(0, val)
 		assertSize(t, uint(4), l.size)
-		assertValues(t, []int{50, 10, 20, 30}, getValues(l))
+		assertValues(t, []int{val, 10, 20, 30}, getValues(l))
+		assertPointer(t, l.head, getPtrFromLastNode(l))
+	})
+	t.Run("Insert into the filled list at the first index", func(t *testing.T) {
+		l := fillList(values)
+		l.insert(1, val)
+		assertSize(t, uint(4), l.size)
+		assertValues(t, []int{10, val, 20, 30}, getValues(l))
+		assertPointer(t, l.head, getPtrFromLastNode(l))
+	})
+	t.Run("Insert into the filled list at the second index", func(t *testing.T) {
+		l := fillList(values)
+		l.insert(2, val)
+		assertSize(t, uint(4), l.size)
+		assertValues(t, []int{10, 20, val, 30}, getValues(l))
+		assertPointer(t, l.head, getPtrFromLastNode(l))
+	})
+	t.Run("Insert into the filled list at the end of the list", func(t *testing.T) {
+		l := fillList(values)
+		l.insert(3, val)
+		assertSize(t, uint(4), l.size)
+		assertValues(t, []int{10, 20, 30, val}, getValues(l))
+		assertPointer(t, l.head, getPtrFromLastNode(l))
+	})
+	t.Run("Insert into the filled list with invalid index", func(t *testing.T) {
+		l := fillList(values)
+		l.insert(4, val)
+		assertSize(t, uint(3), l.size)
+		assertValues(t, values, getValues(l))
 		assertPointer(t, l.head, getPtrFromLastNode(l))
 	})
 }
