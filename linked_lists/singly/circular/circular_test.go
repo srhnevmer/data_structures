@@ -97,10 +97,12 @@ func TestInsert(t *testing.T) {
 }
 
 func getFilledList() list {
-	l := list{}
-	for i := range values {
-		l.insert(uint(i), values[i])
-	}
+	l := list{size: 3}
+	n0 := &node{nil, values[0]}
+	n1 := &node{nil, values[1]}
+	n2 := &node{nil, values[2]}
+	l.head, l.tail = n0, n2
+	n0.next, n1.next, n2.next = n1, n2, n0
 	return l
 }
 
