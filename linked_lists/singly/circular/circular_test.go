@@ -27,6 +27,13 @@ func TestInsert(t *testing.T) {
 		assertValues(t, []int{val}, getValues(l))
 		assertPointer(t, l.head, getPtrFromLastNode(l))
 	})
+	t.Run("Insert into the filled list at the first index", func(t *testing.T) {
+		l := fillList(values)
+		l.insert(0, val)
+		assertSize(t, uint(4), l.size)
+		assertValues(t, []int{50, 10, 20, 30}, getValues(l))
+		assertPointer(t, l.head, getPtrFromLastNode(l))
+	})
 }
 
 func assertSize(t testing.TB, want, got uint) {
