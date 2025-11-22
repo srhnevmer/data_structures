@@ -187,3 +187,10 @@ func assertSize(t testing.TB, want, got uint) {
 		t.Fatalf("Expected size: %d got: %d", want, got)
 	}
 }
+
+func assertValues(t testing.TB, want, got []int) {
+	t.Helper()
+	if slices.Compare(want, got) != 0 {
+		t.Fatalf("Expected values: %v got: %v", want, got)
+	}
+}
