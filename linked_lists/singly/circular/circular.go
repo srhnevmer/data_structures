@@ -39,3 +39,38 @@ func (l *list) insert(idx uint, val int) {
 		n.next, prev.next = prev.next, n
 	}
 }
+
+func (l *list) delete(idx uint) {
+	if l.size <= idx || l.head == nil {
+		return
+	}
+
+	switch {
+	case idx == 0 && l.size == 1:
+		l.head, l.tail = nil, nil
+	case idx == 0:
+		target := l.head
+		l.head = target.next
+		l.tail.next = l.head
+		target.next = nil
+	case idx == l.size-1:
+		var prev *node
+		curr := l.head
+		for range idx {
+			prev = curr
+			curr = curr.next
+		}
+		prev.next = l.head
+		l.tail = prev
+	default:
+		var prev *node
+		curr := l.head
+		for range idx {
+			prev = curr
+			curr = curr.next
+		}
+		prev.next = curr.next
+		curr.next = nil
+	}
+	l.size--
+}
