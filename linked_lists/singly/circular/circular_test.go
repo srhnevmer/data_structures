@@ -188,3 +188,10 @@ func assertValues(t testing.TB, want, got []int) {
 		t.Fatalf("Expected values: %v got: %v", want, got)
 	}
 }
+
+func assertPointer(t testing.TB, want, got *node) {
+	t.Helper()
+	if want != got {
+		t.Errorf("Expected result: [ptr: %p value: %[1]v] got: [ptr: %p value: %[2]v]", want, got)
+	}
+}
