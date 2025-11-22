@@ -184,3 +184,10 @@ func getValuesFromList(l list) []int {
 	}
 	return values
 }
+
+func assertSize(t testing.TB, want, got uint) {
+	t.Helper()
+	if want != got {
+		t.Fatalf("Expected size: %d got: %d", want, got)
+	}
+}
