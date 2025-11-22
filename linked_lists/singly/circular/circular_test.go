@@ -90,6 +90,76 @@ func TestInsert(t *testing.T) {
 	}
 }
 
+func TestDelete(t *testing.T) {
+	testCases := []struct {
+		name string
+		list
+		size                  uint
+		index                 uint
+		valuesInExpectedOrder []int
+	}{
+		{
+			name:                  "Attempt to delete a value from an empty list",
+			list:                  list{},
+			size:                  0,
+			index:                 0,
+			valuesInExpectedOrder: []int{},
+		},
+		{
+			name:                  "Delete a value from a list of size 1 with a valid index",
+			list:                  getFilledList(values[:1]),
+			size:                  0,
+			index:                 0,
+			valuesInExpectedOrder: []int{},
+		},
+		{
+			name:                  "Attempt to delete a value from a list of size 1 with an invalid index",
+			list:                  getFilledList(values[:1]),
+			size:                  1,
+			index:                 invalidIndex,
+			valuesInExpectedOrder: []int{10},
+		},
+		{
+			name:                  "Attempt to delete a value from a filled list with an invalid index",
+			list:                  getFilledList(values),
+			size:                  3,
+			index:                 invalidIndex,
+			valuesInExpectedOrder: []int{10, 20, 30},
+		},
+		{
+			name:                  "Delete a value from a filled list at the zero index",
+			list:                  getFilledList(values),
+			size:                  2,
+			index:                 0,
+			valuesInExpectedOrder: []int{20, 30},
+		},
+		{
+			name:                  "Delete a value from a filled list at the first index",
+			list:                  getFilledList(values),
+			size:                  2,
+			index:                 1,
+			valuesInExpectedOrder: []int{10, 30},
+		},
+		{
+			name:                  "Delete a value from a filled list at the second index",
+			list:                  getFilledList(values),
+			size:                  2,
+			index:                 2,
+			valuesInExpectedOrder: []int{10, 20},
+		},
+	}
+	for i, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			tc.list.delete(tc.index)
+			assertSize(t, tc.size, tc.list.size)
+			assertValues(t, tc.valuesInExpectedOrder, getValuesFromList(tc.list))
+			if i > 1 {
+				assertPointer(t, tc.list.head, tc.list.tail.next)
+			}
+		})
+	}
+}
+
 func getFilledList(values []int) list {
 	l := list{size: uint(len(values))}
 	n := &node{nil, values[0]}
