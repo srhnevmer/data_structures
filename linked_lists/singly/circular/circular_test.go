@@ -96,6 +96,77 @@ func TestInsert(t *testing.T) {
 	}
 }
 
+func TestDelete(t *testing.T) {
+	testCase := []struct {
+		name string
+		list
+		size   uint
+		index  uint
+		values []int
+	}{
+		{
+			name:   "Delete a value from an empty list with an invalid index",
+			list:   list{},
+			size:   0,
+			index:  1,
+			values: []int{},
+		},
+		{
+			name:   "Delete a value from an empty list with a valid index",
+			list:   list{},
+			size:   0,
+			index:  1,
+			values: []int{},
+		},
+		{
+			name:   "Delete a value from a filled list with an invalid index",
+			list:   getFilledList(),
+			size:   3,
+			index:  3,
+			values: []int{10, 20, 30},
+		},
+		{
+			name:   "Delete a value from a filled list at the zero index",
+			list:   getFilledList(),
+			size:   2,
+			index:  0,
+			values: []int{20, 30},
+		},
+		{
+			name:   "Delete a value from a filled list at the first index",
+			list:   getFilledList(),
+			size:   2,
+			index:  1,
+			values: []int{10, 30},
+		},
+		{
+			name:   "Delete a value from a filled list at the second index",
+			list:   getFilledList(),
+			size:   2,
+			index:  2,
+			values: []int{10, 20},
+		},
+	}
+	for i, tc := range testCase {
+		t.Run(tc.name, func(t *testing.T) {
+			tc.list.delete(tc.index)
+			if want, got := tc.size, tc.list.size; want != got {
+				t.Fatalf("Expected size: %d got: %d", want, got)
+			}
+
+			if want, got := tc.values, getValuesFromList(tc.list); slices.Compare(want, got) != 0 {
+				t.Fatalf("Expected values: %v got: %v", want, got)
+			}
+
+			if i > 1 {
+				if want, got := tc.list.head, tc.list.tail.next; want != got {
+					t.Errorf("Expected result: [ptr: %p value: %[1]v] got: [ptr: %p value: %[2]v]", want, got)
+				}
+			}
+		})
+	}
+}
+
 func getFilledList() list {
 	l := list{size: 3}
 	n0 := &node{nil, values[0]}
