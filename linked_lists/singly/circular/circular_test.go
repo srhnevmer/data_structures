@@ -79,9 +79,7 @@ func TestInsert(t *testing.T) {
 	for i, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
-			if want, got := tc.size, tc.list.size; want != got {
-				t.Fatalf("Expected size: %d got: %d", want, got)
-			}
+			assertSize(t, tc.size, tc.list.size)
 
 			if want, got := tc.values, getValuesFromList(tc.list); slices.Compare(want, got) != 0 {
 				t.Fatalf("Expected values: %v got: %v", want, got)
@@ -150,9 +148,7 @@ func TestDelete(t *testing.T) {
 	for i, tc := range testCase {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.delete(tc.index)
-			if want, got := tc.size, tc.list.size; want != got {
-				t.Fatalf("Expected size: %d got: %d", want, got)
-			}
+			assertSize(t, tc.size, tc.list.size)
 
 			if want, got := tc.values, getValuesFromList(tc.list); slices.Compare(want, got) != 0 {
 				t.Fatalf("Expected values: %v got: %v", want, got)
