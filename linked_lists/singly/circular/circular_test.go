@@ -81,11 +81,8 @@ func TestInsert(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
 			assertSize(t, tc.size, tc.list.size)
 			assertValues(t, tc.values, getValuesFromList(tc.list))
-
 			if i != 0 {
-				if want, got := tc.list.head, tc.list.tail.next; want != got {
-					t.Errorf("Expected result: [ptr: %p value: %[1]v] got: [ptr: %p value: %[2]v]", want, got)
-				}
+				assertPointer(t, tc.list.head, tc.list.tail.next)
 			}
 		})
 	}
@@ -147,11 +144,8 @@ func TestDelete(t *testing.T) {
 			tc.list.delete(tc.index)
 			assertSize(t, tc.size, tc.list.size)
 			assertValues(t, tc.values, getValuesFromList(tc.list))
-
 			if i > 1 {
-				if want, got := tc.list.head, tc.list.tail.next; want != got {
-					t.Errorf("Expected result: [ptr: %p value: %[1]v] got: [ptr: %p value: %[2]v]", want, got)
-				}
+				assertPointer(t, tc.list.head, tc.list.tail.next)
 			}
 		})
 	}
