@@ -96,6 +96,25 @@ func TestSearch(t *testing.T) {
 	}
 }
 
+func TestReverse(t *testing.T) {
+	testCases := []struct {
+		name string
+		list
+		expectedList list
+	}{
+		{name: "Reverse a list of size 1", list: getFilledList(values[:1]), expectedList: getFilledList(values[:1])},
+		{name: "Reverse a list of size 2", list: getFilledList(values[:2]), expectedList: getFilledList([]int{20, 10})},
+		{name: "Reverse a list of size 3", list: getFilledList(values), expectedList: getFilledList([]int{30, 20, 10})},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			tc.list.reverse()
+			assertValues(t, getValuesFromList(tc.expectedList), getValuesFromList(tc.list))
+			assertPointer(t, tc.list.head, tc.list.tail.next)
+		})
+	}
+}
+
 func getFilledList(values []int) list {
 	l := list{size: uint(len(values))}
 	n := &node{nil, values[0]}
