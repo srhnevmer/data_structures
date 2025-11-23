@@ -58,14 +58,6 @@ func (l *list) delete(idx uint) {
 	l.size--
 }
 
-func (l *list) traverse() []int {
-	r := make([]int, 0, l.size)
-	for curr := l.head; curr != nil; curr = curr.next {
-		r = append(r, curr.value)
-	}
-	return r
-}
-
 func (l *list) search(val int) bool {
 	for curr := l.head; curr != nil; curr = curr.next {
 		if curr.value == val {

@@ -64,24 +64,6 @@ func TestDelete(t *testing.T) {
 	}
 }
 
-func TestTraverse(t *testing.T) {
-	testCases := []struct {
-		list
-		want []int
-	}{
-		{list: list{}, want: []int{}},
-		{list: fillList(nums[:1]), want: []int{10}},
-		{list: fillList(nums[:2]), want: []int{10, 20}},
-		{list: fillList(nums), want: []int{10, 20, 30}},
-	}
-
-	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
-			assertValues(t, tc.want, tc.list.traverse())
-		})
-	}
-}
-
 func TestSearch(t *testing.T) {
 	testCases := []struct {
 		list
