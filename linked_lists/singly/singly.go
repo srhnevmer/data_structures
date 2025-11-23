@@ -38,14 +38,13 @@ func (l *list) delete(idx uint) {
 		return
 	}
 
-	l.size--
 	switch {
-	case l.size == 1:
+	case idx == 0 && l.size == 1:
 		l.head = nil
 	case idx == 0:
-		t := l.head
-		l.head = t.next
-		t.next = nil
+		target := l.head
+		l.head = target.next
+		target = nil
 	default:
 		var prev *node
 		curr := l.head
@@ -54,8 +53,9 @@ func (l *list) delete(idx uint) {
 			curr = curr.next
 		}
 		prev.next = curr.next
-		curr.next = nil
+		curr = nil
 	}
+	l.size--
 }
 
 func (l *list) traverse() []int {
