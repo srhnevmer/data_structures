@@ -70,7 +70,6 @@ func (l *list) search(val int) bool {
 func (l *list) reverse() {
 	var prev *node
 	curr := l.head
-
 	for curr != nil {
 		next := curr.next
 		curr.next = prev
