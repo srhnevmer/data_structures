@@ -41,7 +41,7 @@ func (l *list) insert(idx uint, val int) {
 }
 
 func (l *list) delete(idx uint) {
-	if l.size <= idx || l.head == nil {
+	if l.head == nil || l.size <= idx {
 		return
 	}
 
@@ -52,16 +52,7 @@ func (l *list) delete(idx uint) {
 		target := l.head
 		l.head = target.next
 		l.tail.next = l.head
-		target.next = nil
-	case idx == l.size-1:
-		var prev *node
-		curr := l.head
-		for range idx {
-			prev = curr
-			curr = curr.next
-		}
-		prev.next = l.head
-		l.tail = prev
+		target = nil
 	default:
 		var prev *node
 		curr := l.head
@@ -69,8 +60,15 @@ func (l *list) delete(idx uint) {
 			prev = curr
 			curr = curr.next
 		}
-		prev.next = curr.next
-		curr.next = nil
+
+		if idx == l.size-1 {
+			l.tail = prev
+			prev.next = l.head
+			curr = nil
+		} else {
+			prev.next = curr.next
+			curr = nil
+		}
 	}
 	l.size--
 }
