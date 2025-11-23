@@ -15,7 +15,6 @@ func (l *list) insert(idx uint, val int) {
 		return
 	}
 
-	l.size++
 	n := &node{nil, val}
 	switch {
 	case l.head == nil:
@@ -23,12 +22,10 @@ func (l *list) insert(idx uint, val int) {
 		l.head, l.tail = n, n
 	case idx == 0:
 		n.next = l.head
-		l.head = n
-		l.tail.next = l.head
-	case idx == l.size-1:
+		l.tail.next, l.head = n, n
+	case idx == l.size:
 		n.next = l.head
-		l.tail.next = n
-		l.tail = n
+		l.tail.next, l.tail = n, n
 	default:
 		var prev *node
 		curr := l.head
@@ -38,6 +35,7 @@ func (l *list) insert(idx uint, val int) {
 		}
 		n.next, prev.next = prev.next, n
 	}
+	l.size++
 }
 
 func (l *list) delete(idx uint) {
