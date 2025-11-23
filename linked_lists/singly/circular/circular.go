@@ -70,3 +70,14 @@ func (l *list) delete(idx uint) {
 	}
 	l.size--
 }
+
+func (l *list) search(target int) (uint, bool) {
+	if l.size != 0 {
+		for i, curr := uint(0), l.head; i < l.size; i, curr = i+1, curr.next {
+			if curr.value == target {
+				return i, true
+			}
+		}
+	}
+	return 0, false
+}
