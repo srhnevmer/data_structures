@@ -33,22 +33,22 @@ func (l *list) insert(index uint, value int) {
 	l.size++
 }
 
-func (l *list) delete(idx uint) {
-	if l.size == 0 || l.size <= idx {
+func (l *list) delete(index uint) {
+	if l.size == 0 || l.size <= index {
 		return
 	}
 
 	switch {
-	case idx == 0 && l.size == 1:
+	case index == 0 && l.size == 1:
 		l.head = nil
-	case idx == 0:
+	case index == 0:
 		target := l.head
 		l.head = target.next
 		target = nil
 	default:
 		var prev *node
 		curr := l.head
-		for range idx {
+		for range index {
 			prev, curr = curr, curr.next
 		}
 		prev.next = curr.next
