@@ -11,7 +11,7 @@ func TestInsert(t *testing.T) {
 		list
 		size           uint
 		index          uint
-		payload        int
+		value          int
 		expectedValues []int
 	}{
 		{
@@ -19,7 +19,7 @@ func TestInsert(t *testing.T) {
 			list:           list{},
 			size:           0,
 			index:          1,
-			payload:        50,
+			value:          50,
 			expectedValues: []int{},
 		},
 		{
@@ -27,7 +27,7 @@ func TestInsert(t *testing.T) {
 			list:           list{},
 			size:           1,
 			index:          0,
-			payload:        50,
+			value:          50,
 			expectedValues: []int{50},
 		},
 		{
@@ -35,7 +35,7 @@ func TestInsert(t *testing.T) {
 			list:           getFilledList([]int{10, 20, 30}),
 			size:           3,
 			index:          4,
-			payload:        50,
+			value:          50,
 			expectedValues: []int{10, 20, 30},
 		},
 		{
@@ -43,7 +43,7 @@ func TestInsert(t *testing.T) {
 			list:           getFilledList([]int{10, 20, 30}),
 			size:           4,
 			index:          0,
-			payload:        50,
+			value:          50,
 			expectedValues: []int{50, 10, 20, 30},
 		},
 		{
@@ -51,7 +51,7 @@ func TestInsert(t *testing.T) {
 			list:           getFilledList([]int{10, 20, 30}),
 			size:           4,
 			index:          1,
-			payload:        50,
+			value:          50,
 			expectedValues: []int{10, 50, 20, 30},
 		},
 		{
@@ -59,7 +59,7 @@ func TestInsert(t *testing.T) {
 			list:           getFilledList([]int{10, 20, 30}),
 			size:           4,
 			index:          2,
-			payload:        50,
+			value:          50,
 			expectedValues: []int{10, 20, 50, 30},
 		},
 		{
@@ -67,13 +67,13 @@ func TestInsert(t *testing.T) {
 			list:           getFilledList([]int{10, 20, 30}),
 			size:           4,
 			index:          3,
-			payload:        50,
+			value:          50,
 			expectedValues: []int{10, 20, 30, 50},
 		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			tc.list.insert(tc.index, tc.payload)
+			tc.list.insert(tc.index, tc.value)
 			assertSize(t, tc.size, tc.list.size)
 			assertValues(t, tc.expectedValues, getValues(tc.list))
 		})
