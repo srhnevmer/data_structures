@@ -49,8 +49,7 @@ func (l *list) delete(idx uint) {
 		var prev *node
 		curr := l.head
 		for range idx {
-			prev = curr
-			curr = curr.next
+			prev, curr = curr, curr.next
 		}
 		prev.next = curr.next
 		curr = nil
@@ -58,13 +57,15 @@ func (l *list) delete(idx uint) {
 	l.size--
 }
 
-func (l *list) search(val int) bool {
-	for curr := l.head; curr != nil; curr = curr.next {
-		if curr.value == val {
-			return true
+func (l *list) search(target int) (uint, bool) {
+	if l.size != 0 {
+		for i, curr := uint(0), l.head; curr != nil; i, curr = i+1, curr.next {
+			if curr.value == target {
+				return i, true
+			}
 		}
 	}
-	return false
+	return 0, false
 }
 
 func (l *list) reverse() {
