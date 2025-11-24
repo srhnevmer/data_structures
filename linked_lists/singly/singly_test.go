@@ -124,18 +124,6 @@ func getFilledList(values []int) list {
 	return l
 }
 
-func fillList(values []int) list {
-	n := &node{nil, values[0]}
-	l, values := list{}, values[1:]
-	l.head, l.size = n, 1
-
-	for i, curr := 0, l.head; i < len(values); i, curr = i+1, curr.next {
-		curr.next = &node{nil, values[i]}
-		l.size++
-	}
-	return l
-}
-
 func assertSize(t testing.TB, want, got uint) {
 	t.Helper()
 	if want != got {
