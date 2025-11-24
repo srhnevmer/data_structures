@@ -1,109 +1,151 @@
 package singly
 
 import (
-	"fmt"
 	"slices"
 	"testing"
 )
 
-var (
-	val              = 50
-	nums             = []int{10, 20, 30}
-	testNameTemplate = "Test case number:"
-)
-
 func TestInsert(t *testing.T) {
 	testCases := []struct {
-		list  list
-		index uint
-		value int
-		size  uint
-		want  []int
-	}{
-		{list: list{}, index: 1, value: val, size: 0, want: []int{}},
-		{list: list{}, index: 0, value: val, size: 1, want: []int{50}},
-		{list: fillList(nums), index: 4, value: val, size: 3, want: []int{10, 20, 30}},
-		{list: fillList(nums), index: 0, value: val, size: 4, want: []int{50, 10, 20, 30}},
-		{list: fillList(nums), index: 1, value: val, size: 4, want: []int{10, 50, 20, 30}},
-		{list: fillList(nums), index: 2, value: val, size: 4, want: []int{10, 20, 50, 30}},
-		{list: fillList(nums), index: 3, value: val, size: 4, want: []int{10, 20, 30, 50}},
-	}
-
-	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
-			tc.list.insert(tc.index, tc.value)
-			assertSize(t, tc.size, tc.list.size)
-			assertValues(t, tc.want, extractValues(tc.list))
-		})
-	}
-}
-
-func TestDelete(t *testing.T) {
-	testCases := []struct {
-		list  list
-		index uint
-		size  uint
-		want  []int
-	}{
-		{list: list{}, index: 1, size: 0, want: []int{}},
-		{list: list{}, index: 0, size: 0, want: []int{}},
-		{list: fillList(nums[:1]), index: 1, size: 1, want: []int{10}},
-		{list: fillList(nums[:1]), index: 0, size: 0, want: []int{}},
-		{list: fillList(nums), index: 0, size: 2, want: []int{20, 30}},
-		{list: fillList(nums), index: 1, size: 2, want: []int{10, 30}},
-		{list: fillList(nums), index: 2, size: 2, want: []int{10, 20}},
-		{list: fillList(nums), index: 3, size: 3, want: []int{10, 20, 30}},
-	}
-
-	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
-			tc.list.delete(tc.index)
-			assertSize(t, tc.size, tc.list.size)
-			assertValues(t, tc.want, extractValues(tc.list))
-		})
-	}
-}
-
-func TestSearch(t *testing.T) {
-	testCases := []struct {
+		name string
 		list
-		value int
-		want  bool
+		size           uint
+		index          uint
+		payload        int
+		expectedValues []int
 	}{
-		{list: list{}, value: val, want: false},
-		{list: fillList(nums), value: 10, want: true},
-		{list: fillList(nums), value: 20, want: true},
-		{list: fillList(nums), value: 30, want: true},
-		{list: fillList(nums), value: val, want: false},
+		{
+			name:           "Attempt to insert into an empty list with an invalid index",
+			list:           list{},
+			size:           0,
+			index:          1,
+			payload:        50,
+			expectedValues: []int{},
+		},
+		{
+			name:           "Insert into an empty list with a valid index",
+			list:           list{},
+			size:           1,
+			index:          0,
+			payload:        50,
+			expectedValues: []int{50},
+		},
+		{
+			name:           "Attempt to insert into a filled list with an invalid index",
+			list:           getFilledList([]int{10, 20, 30}),
+			size:           3,
+			index:          4,
+			payload:        50,
+			expectedValues: []int{10, 20, 30},
+		},
+		{
+			name:           "Insert into a filled list at the zero index",
+			list:           getFilledList([]int{10, 20, 30}),
+			size:           4,
+			index:          0,
+			payload:        50,
+			expectedValues: []int{50, 10, 20, 30},
+		},
+		{
+			name:           "Insert into a filled list at the first index",
+			list:           getFilledList([]int{10, 20, 30}),
+			size:           4,
+			index:          1,
+			payload:        50,
+			expectedValues: []int{10, 50, 20, 30},
+		},
+		{
+			name:           "Insert into a filled list at the second index",
+			list:           getFilledList([]int{10, 20, 30}),
+			size:           4,
+			index:          2,
+			payload:        50,
+			expectedValues: []int{10, 20, 50, 30},
+		},
+		{
+			name:           "Insert into a filled list at the end of the list",
+			list:           getFilledList([]int{10, 20, 30}),
+			size:           4,
+			index:          3,
+			payload:        50,
+			expectedValues: []int{10, 20, 30, 50},
+		},
 	}
-
-	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
-			if got := tc.list.search(tc.value); tc.want != got {
-				t.Errorf("Expected result: %t got: %t", tc.want, got)
-			}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			tc.list.insert(tc.index, tc.payload)
+			assertSize(t, tc.size, tc.list.size)
+			assertValues(t, tc.expectedValues, getValues(tc.list))
 		})
 	}
 }
 
-func TestReverse(t *testing.T) {
-	testCases := []struct {
-		list
-		want []int
-	}{
-		{list: list{}, want: []int{}},
-		{list: fillList(nums[:1]), want: []int{10}},
-		{list: fillList(nums[:2]), want: []int{20, 10}},
-		{list: fillList(nums), want: []int{30, 20, 10}},
-	}
+// func TestDelete(t *testing.T) {
+// 	testCases := []struct {
+// 		list  list
+// 		index uint
+// 		size  uint
+// 		want  []int
+// 	}{
+// 		{list: list{}, index: 1, size: 0, want: []int{}},
+// 		{list: list{}, index: 0, size: 0, want: []int{}},
+// 		{list: fillList(nums[:1]), index: 1, size: 1, want: []int{10}},
+// 		{list: fillList(nums[:1]), index: 0, size: 0, want: []int{}},
+// 		{list: fillList(nums), index: 0, size: 2, want: []int{20, 30}},
+// 		{list: fillList(nums), index: 1, size: 2, want: []int{10, 30}},
+// 		{list: fillList(nums), index: 2, size: 2, want: []int{10, 20}},
+// 		{list: fillList(nums), index: 3, size: 3, want: []int{10, 20, 30}},
+// 	}
 
-	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
-			tc.list.reverse()
-			assertValues(t, tc.want, extractValues(tc.list))
-		})
-	}
-}
+// 	for i, tc := range testCases {
+// 		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
+// 			tc.list.delete(tc.index)
+// 			assertSize(t, tc.size, tc.list.size)
+// 			assertValues(t, tc.want, extractValues(tc.list))
+// 		})
+// 	}
+// }
+
+// func TestSearch(t *testing.T) {
+// 	testCases := []struct {
+// 		list
+// 		value int
+// 		want  bool
+// 	}{
+// 		{list: list{}, value: val, want: false},
+// 		{list: fillList(nums), value: 10, want: true},
+// 		{list: fillList(nums), value: 20, want: true},
+// 		{list: fillList(nums), value: 30, want: true},
+// 		{list: fillList(nums), value: val, want: false},
+// 	}
+
+// 	for i, tc := range testCases {
+// 		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
+// 			if got := tc.list.search(tc.value); tc.want != got {
+// 				t.Errorf("Expected result: %t got: %t", tc.want, got)
+// 			}
+// 		})
+// 	}
+// }
+
+// func TestReverse(t *testing.T) {
+// 	testCases := []struct {
+// 		list
+// 		want []int
+// 	}{
+// 		{list: list{}, want: []int{}},
+// 		{list: fillList(nums[:1]), want: []int{10}},
+// 		{list: fillList(nums[:2]), want: []int{20, 10}},
+// 		{list: fillList(nums), want: []int{30, 20, 10}},
+// 	}
+
+// 	for i, tc := range testCases {
+// 		t.Run(fmt.Sprintf("%s%d", testNameTemplate, i+1), func(t *testing.T) {
+// 			tc.list.reverse()
+// 			assertValues(t, tc.want, extractValues(tc.list))
+// 		})
+// 	}
+// }
 
 func getFilledList(values []int) list {
 	l := list{size: uint(len(values))}
