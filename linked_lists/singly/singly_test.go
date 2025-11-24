@@ -105,14 +105,6 @@ func TestReverse(t *testing.T) {
 	}
 }
 
-func extractValues(l list) []int {
-	r := make([]int, 0, l.size)
-	for curr := l.head; curr != nil; curr = curr.next {
-		r = append(r, curr.value)
-	}
-	return r
-}
-
 func getFilledList(values []int) list {
 	l := list{size: uint(len(values))}
 	n := &node{nil, values[0]}
