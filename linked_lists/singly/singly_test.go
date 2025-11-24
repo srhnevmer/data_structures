@@ -113,6 +113,17 @@ func extractValues(l list) []int {
 	return r
 }
 
+func getFilledList(values []int) list {
+	l := list{size: uint(len(values))}
+	n := &node{nil, values[0]}
+	values = values[1:]
+	l.head = n
+	for i, curr := 0, l.head; i < len(values); i, curr = i+1, curr.next {
+		curr.next = &node{nil, values[i]}
+	}
+	return l
+}
+
 func fillList(values []int) list {
 	n := &node{nil, values[0]}
 	l, values := list{}, values[1:]
