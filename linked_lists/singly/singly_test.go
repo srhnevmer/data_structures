@@ -124,6 +124,14 @@ func getFilledList(values []int) list {
 	return l
 }
 
+func getValues(l list) []int {
+	v := make([]int, 0, l.size)
+	for curr := l.head; curr != nil; curr = curr.next {
+		v = append(v, curr.value)
+	}
+	return v
+}
+
 func assertSize(t testing.TB, want, got uint) {
 	t.Helper()
 	if want != got {
