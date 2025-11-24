@@ -134,6 +134,6 @@ func assertSize(t testing.TB, want, got uint) {
 func assertValues(t testing.TB, want, got []int) {
 	t.Helper()
 	if slices.Compare(want, got) != 0 {
-		t.Errorf("Expected result: %v, got: %v", want, got)
+		t.Errorf("Expected values: %v, got: %v", want, got)
 	}
 }
