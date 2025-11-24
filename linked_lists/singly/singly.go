@@ -10,22 +10,22 @@ type list struct {
 	size uint
 }
 
-func (l *list) insert(idx uint, val int) {
-	if l.size < idx {
+func (l *list) insert(index uint, value int) {
+	if l.size < index {
 		return
 	}
 
-	n := &node{nil, val}
+	n := &node{nil, value}
 	switch {
 	case l.head == nil:
 		l.head = n
-	case idx == 0:
+	case index == 0:
 		n.next = l.head
 		l.head = n
 	default:
 		var prev *node
 		curr := l.head
-		for range idx {
+		for range index {
 			prev, curr = curr, curr.next
 		}
 		n.next, prev.next = curr, n
