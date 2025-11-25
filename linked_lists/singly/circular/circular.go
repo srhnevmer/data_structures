@@ -10,26 +10,26 @@ type list struct {
 	size       uint
 }
 
-func (l *list) insert(idx uint, val int) {
-	if l.size < idx {
+func (l *list) insert(index uint, value int) {
+	if l.size < index {
 		return
 	}
 
-	n := &node{nil, val}
+	n := &node{nil, value}
 	switch {
 	case l.head == nil:
 		n.next = n
 		l.head, l.tail = n, n
-	case idx == 0:
+	case index == 0:
 		n.next = l.head
 		l.tail.next, l.head = n, n
-	case idx == l.size:
+	case index == l.size:
 		n.next = l.head
 		l.tail.next, l.tail = n, n
 	default:
 		var prev *node
 		curr := l.head
-		for range idx {
+		for range index {
 			prev = curr
 			curr = curr.next
 		}
@@ -38,15 +38,15 @@ func (l *list) insert(idx uint, val int) {
 	l.size++
 }
 
-func (l *list) delete(idx uint) {
-	if l.head == nil || l.size <= idx {
+func (l *list) delete(index uint) {
+	if l.head == nil || l.size <= index {
 		return
 	}
 
 	switch {
-	case idx == 0 && l.size == 1:
+	case index == 0 && l.size == 1:
 		l.head, l.tail = nil, nil
-	case idx == 0:
+	case index == 0:
 		target := l.head
 		l.head = target.next
 		l.tail.next = l.head
@@ -54,12 +54,12 @@ func (l *list) delete(idx uint) {
 	default:
 		var prev *node
 		curr := l.head
-		for range idx {
+		for range index {
 			prev = curr
 			curr = curr.next
 		}
 
-		if idx == l.size-1 {
+		if index == l.size-1 {
 			l.tail = prev
 			prev.next = l.head
 			curr = nil
