@@ -60,11 +60,10 @@ func (l *list) delete(index uint) {
 		if index == l.size-1 {
 			l.tail = prev
 			prev.next = l.head
-			curr = nil
 		} else {
 			prev.next = curr.next
-			curr = nil
 		}
+		curr = nil
 	}
 	l.size--
 }
