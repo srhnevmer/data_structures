@@ -30,8 +30,7 @@ func (l *list) insert(index uint, value int) {
 		var prev *node
 		curr := l.head
 		for range index {
-			prev = curr
-			curr = curr.next
+			prev, curr = curr, curr.next
 		}
 		n.next, prev.next = prev.next, n
 	}
@@ -55,8 +54,7 @@ func (l *list) delete(index uint) {
 		var prev *node
 		curr := l.head
 		for range index {
-			prev = curr
-			curr = curr.next
+			prev, curr = curr, curr.next
 		}
 
 		if index == l.size-1 {
