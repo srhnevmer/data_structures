@@ -76,7 +76,7 @@ func TestInsert(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
 			assertSize(t, tc.size, tc.list.size)
-			assertValues(t, tc.expectedValues, getValuesFromList(tc.list))
+			assertValues(t, tc.expectedValues, getValues(tc.list))
 			if i != 0 {
 				assertPointer(t, tc.list.head, tc.list.tail.next)
 			}
@@ -146,7 +146,7 @@ func TestDelete(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.delete(tc.index)
 			assertSize(t, tc.size, tc.list.size)
-			assertValues(t, tc.expectedValues, getValuesFromList(tc.list))
+			assertValues(t, tc.expectedValues, getValues(tc.list))
 			if i > 1 {
 				assertPointer(t, tc.list.head, tc.list.tail.next)
 			}
@@ -236,7 +236,7 @@ func TestReverse(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.reverse()
-			assertValues(t, tc.expectedValues, getValuesFromList(tc.list))
+			assertValues(t, tc.expectedValues, getValues(tc.list))
 			assertPointer(t, tc.list.head, tc.list.tail.next)
 		})
 	}
@@ -271,13 +271,13 @@ func TestGetFilledList(t *testing.T) {
 		t.Run(fmt.Sprintf("Test case number: %d", i+1), func(t *testing.T) {
 			l := getFilledList(tc.values)
 			assertSize(t, tc.size, l.size)
-			assertValues(t, tc.expectedValues, getValuesFromList(l))
+			assertValues(t, tc.expectedValues, getValues(l))
 			assertPointer(t, l.head, l.tail.next)
 		})
 	}
 }
 
-func getValuesFromList(l list) []int {
+func getValues(l list) []int {
 	values := make([]int, 0, l.size)
 	for i, curr := uint(0), l.head; i < l.size; i, curr = i+1, curr.next {
 		values = append(values, curr.value)
