@@ -32,7 +32,6 @@ func (l *list) insert(index uint, value int) {
 		if index == l.size {
 			prev.next, n.prev = n, prev
 		} else {
-			prev := curr.prev
 			prev.next, n.prev = n, prev
 			curr.prev, n.next = n, curr
 		}
