@@ -49,7 +49,7 @@ func (l *list) delete(index uint) {
 		target := l.head
 		l.head = target.next
 		l.tail.next = l.head
-		target = nil
+		target.next = nil
 	default:
 		var prev *node
 		curr := l.head

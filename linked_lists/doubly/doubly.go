@@ -49,9 +49,8 @@ func (l *list) delete(index uint) {
 		l.head = nil
 	case index == 0:
 		target := l.head
-		target.next.prev = nil
 		l.head = target.next
-		target = nil
+		target.next.prev, target.next = nil, nil
 	default:
 		curr := l.head
 		for range index {
