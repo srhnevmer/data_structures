@@ -189,6 +189,22 @@ func getValues(l list) []int {
 	return v
 }
 
+func getValuesFromTail(l list) []int {
+	if l.head == nil {
+		return []int{}
+	}
+	curr := l.head
+	v := make([]int, 0, l.size)
+	for curr.next != nil {
+		curr = curr.next
+	}
+	for curr != nil {
+		v = append(v, curr.value)
+		curr = curr.prev
+	}
+	return v
+}
+
 func getFilledList(values []int) list {
 	var prev *node
 	l := list{size: uint(len(values))}
