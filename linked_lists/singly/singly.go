@@ -52,7 +52,7 @@ func (l *list) delete(index uint) {
 			prev, curr = curr, curr.next
 		}
 		prev.next = curr.next
-		curr = nil
+		curr.next = nil
 	}
 	l.size--
 }
