@@ -38,7 +38,7 @@ func (l *list) insert(index uint, value int) {
 }
 
 func (l *list) delete(index uint) {
-	if l.head == nil || l.size <= index {
+	if l.size <= index {
 		return
 	}
 
