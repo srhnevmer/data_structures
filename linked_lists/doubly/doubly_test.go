@@ -83,10 +83,8 @@ func TestInsert(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
 			assertSize(t, tc.size, tc.list.size)
-			got := getValues(tc.list)
-			assertValues(t, tc.expectedValues, got)
-			slices.Reverse(got)
-			assertValues(t, tc.expectedValuesFromTail, got)
+			assertValues(t, tc.expectedValues, getValues(tc.list))
+			assertValues(t, tc.expectedValuesFromTail, getValuesFromTail(tc.list))
 		})
 	}
 }
