@@ -67,3 +67,14 @@ func (l *list) delete(index uint) {
 	}
 	l.size--
 }
+
+func (l *list) search(target int) (uint, bool) {
+	if l.size != 0 {
+		for i, curr := uint(0), l.head; curr != nil; i, curr = i+1, curr.next {
+			if curr.value == target {
+				return i, true
+			}
+		}
+	}
+	return 0, false
+}
