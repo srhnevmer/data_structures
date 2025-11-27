@@ -78,3 +78,12 @@ func (l *list) search(target int) (uint, bool) {
 	}
 	return 0, false
 }
+
+func (l *list) reverse() {
+	for curr := l.head; curr != nil; curr = curr.prev {
+		curr.prev, curr.next = curr.next, curr.prev
+		if curr.prev == nil {
+			l.head = curr
+		}
+	}
+}
