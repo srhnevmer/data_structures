@@ -286,12 +286,12 @@ func getValues(l list) []int {
 }
 
 func getValuesFromTail(l list) []int {
-	if l.head == nil {
-		return []int{}
-	}
 	curr := l.head
 	v := make([]int, 0, l.size)
-	for curr.next != nil {
+	for curr != nil {
+		if curr.next == nil {
+			break
+		}
 		curr = curr.next
 	}
 	for curr != nil {
