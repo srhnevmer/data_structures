@@ -165,6 +165,63 @@ func TestDelete(t *testing.T) {
 	}
 }
 
+func TestSearch(t *testing.T) {
+	testCases := []struct {
+		name string
+		list
+		target         int
+		expectedIndex  uint
+		expectedResult bool
+	}{
+		{
+			name:           "Attempt to find a value in an empty list",
+			list:           list{},
+			target:         50,
+			expectedIndex:  0,
+			expectedResult: false,
+		},
+		{
+			name:           "Attempt to find a value in a filled list but a value doesn't exist",
+			list:           list{},
+			target:         50,
+			expectedIndex:  0,
+			expectedResult: false,
+		},
+		{
+			name:           "Find the value that equals 10",
+			list:           getFilledList([]int{10, 20, 30}),
+			target:         10,
+			expectedIndex:  0,
+			expectedResult: true,
+		},
+		{
+			name:           "Find the value that equals 20",
+			list:           getFilledList([]int{10, 20, 30}),
+			target:         20,
+			expectedIndex:  1,
+			expectedResult: true,
+		},
+		{
+			name:           "Find the value that equals 30",
+			list:           getFilledList([]int{10, 20, 30}),
+			target:         30,
+			expectedIndex:  2,
+			expectedResult: true,
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			idx, ok := tc.list.search(tc.target)
+			if want, got := tc.expectedIndex, idx; want != got {
+				t.Fatalf("Expected index: %d got: %d", want, got)
+			}
+			if want, got := tc.expectedResult, ok; want != got {
+				t.Errorf("Expected result: %t got: %t", want, got)
+			}
+		})
+	}
+}
+
 func assertSize(t testing.TB, want, got uint) {
 	t.Helper()
 	if want != got {
