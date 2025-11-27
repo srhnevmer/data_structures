@@ -85,8 +85,7 @@ func (l *list) reverse() {
 	for i := uint(0); i < l.size; i++ {
 		next := curr.next
 		curr.next = prev
-		prev = curr
-		curr = next
+		prev, curr = curr, next
 	}
 	l.head.next = l.tail
 	l.head, l.tail = l.tail, l.head
