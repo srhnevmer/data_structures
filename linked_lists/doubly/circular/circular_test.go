@@ -313,6 +313,46 @@ func TestSearch(t *testing.T) {
 	}
 }
 
+func TestReverse(t *testing.T) {
+	testCases := []struct {
+		name string
+		list
+		expected
+	}{
+		{
+			name:     "Reverse an empty list",
+			list:     list{},
+			expected: expected{values: []int{}, valuesTail: []int{}},
+		},
+		{
+			name:     "Reverse a list of size 1",
+			list:     getFilledList([]int{10}),
+			expected: expected{values: []int{10}, valuesTail: []int{10}},
+		},
+		{
+			name:     "Reverse a list of size 2",
+			list:     getFilledList([]int{10, 20}),
+			expected: expected{values: []int{20, 10}, valuesTail: []int{10, 20}},
+		},
+		{
+			name:     "Reverse a list of size 3",
+			list:     getFilledList([]int{10, 20, 30}),
+			expected: expected{values: []int{30, 20, 10}, valuesTail: []int{10, 20, 30}},
+		},
+	}
+	for i, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			tc.list.reverse()
+			assertValues(t, tc.expected.values, getValues(tc.list))
+			assertValues(t, tc.expected.valuesTail, getValuesTail(tc.list))
+			if i != 0 {
+				assertPointer(t, tc.list.head, tc.list.tail.next)
+				assertPointer(t, tc.list.tail, tc.list.head.prev)
+			}
+		})
+	}
+}
+
 func assertSize(t testing.TB, want, got uint) {
 	t.Helper()
 	if want != got {
