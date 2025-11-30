@@ -86,3 +86,10 @@ func (l *list) search(target int) (uint, bool) {
 	}
 	return 0, false
 }
+
+func (l *list) reverse() {
+	for i, curr := uint(0), l.head; i < l.size; i, curr = i+1, curr.prev {
+		curr.prev, curr.next = curr.next, curr.prev
+	}
+	l.head, l.tail = l.tail, l.head
+}
