@@ -33,12 +33,12 @@ func (l *list) insert(index uint, value int) {
 
 		switch index {
 		case l.size:
-			n.next, l.head.prev = l.head, n
 			prev.next, n.prev = n, prev
+			l.head.prev, n.next = n, l.head
 			l.tail = n
 		default:
 			prev.next, n.prev = n, prev
-			n.next, curr.prev = curr, n
+			curr.prev, n.next = n, curr
 		}
 	}
 	l.size++
