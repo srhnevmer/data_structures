@@ -43,3 +43,35 @@ func (l *list) insert(index uint, value int) {
 	}
 	l.size++
 }
+
+func (l *list) delete(index uint) {
+	if l.size <= index {
+		return
+	}
+
+	switch {
+	case l.size == 1:
+		l.head.prev, l.head.next = nil, nil
+		l.head, l.tail = nil, nil
+	case index == 0:
+		target := l.head
+		l.head = target.next
+		l.head.prev, l.tail.next = l.tail, l.head
+		target.prev, target.next = nil, nil
+	default:
+		curr := l.head
+		for range index {
+			curr = curr.next
+		}
+
+		switch index {
+		case l.size - 1:
+			curr.prev.next, l.head.prev = l.head, curr.prev
+			l.tail = curr.prev
+		default:
+			curr.prev.next, curr.next.prev = curr.next, curr.prev
+		}
+		curr.prev, curr.next = nil, nil
+	}
+	l.size--
+}
