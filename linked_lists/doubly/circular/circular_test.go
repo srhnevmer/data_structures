@@ -183,8 +183,8 @@ func getFilledList(values []int) list {
 			l.head, l.tail = n, n
 		default:
 			l.tail.next, n.prev = n, l.tail
+			l.head.prev, n.next = n, l.head
 			l.tail = n
-			l.head.prev, l.tail.next = l.tail, l.head
 		}
 	}
 	return l
