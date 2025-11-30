@@ -192,40 +192,32 @@ func getFilledList(values []int) list {
 
 func TestGetFilledList(t *testing.T) {
 	testCases := []struct {
-		name                   string
-		size                   uint
-		values                 []int
-		expectedValues         []int
-		expectedValuesFromTail []int
+		name   string
+		values []int
+		expected
 	}{
 		{
-			name:                   "Create a list whose size is equal to 1",
-			size:                   1,
-			values:                 []int{10},
-			expectedValues:         []int{10},
-			expectedValuesFromTail: []int{10},
+			name:     "Create a list whose size is equal to 1",
+			values:   []int{10},
+			expected: expected{1, []int{10}, []int{10}},
 		},
 		{
-			name:                   "Create a list whose size is equal to 2",
-			size:                   2,
-			values:                 []int{10, 20},
-			expectedValues:         []int{10, 20},
-			expectedValuesFromTail: []int{20, 10},
+			name:     "Create a list whose size is equal to 2",
+			values:   []int{10, 20},
+			expected: expected{2, []int{10, 20}, []int{20, 10}},
 		},
 		{
-			name:                   "Create a list whose size is equal to 3",
-			size:                   3,
-			values:                 []int{10, 20, 30},
-			expectedValues:         []int{10, 20, 30},
-			expectedValuesFromTail: []int{30, 20, 10},
+			name:     "Create a list whose size is equal to 3",
+			values:   []int{10, 20, 30},
+			expected: expected{3, []int{10, 20, 30}, []int{30, 20, 10}},
 		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			l := getFilledList(tc.values)
-			assertSize(t, tc.size, l.size)
-			assertValues(t, tc.expectedValues, getValues(l))
-			assertValues(t, tc.expectedValuesFromTail, getValuesTail(l))
+			assertSize(t, tc.expected.size, l.size)
+			assertValues(t, tc.expected.values, getValues(l))
+			assertValues(t, tc.expected.valuesTail, getValuesTail(l))
 			assertPointer(t, l.head, l.tail.next)
 			assertPointer(t, l.tail, l.head.prev)
 		})
