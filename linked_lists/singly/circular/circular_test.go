@@ -305,29 +305,36 @@ func TestReverse(t *testing.T) {
 	testCases := []struct {
 		name string
 		list
-		expectedValues []int
+		expected
 	}{
 		{
-			name:           "Reverse a list of size 1",
-			list:           getFilledList([]int{10}),
-			expectedValues: []int{10},
+			name:     "Reverse an empty list",
+			list:     list{},
+			expected: expected{values: []int{}},
 		},
 		{
-			name:           "Reverse a list of size 2",
-			list:           getFilledList([]int{10, 20}),
-			expectedValues: []int{20, 10},
+			name:     "Reverse a list of size 1",
+			list:     getFilledList([]int{10}),
+			expected: expected{values: []int{10}},
 		},
 		{
-			name:           "Reverse a list of size 3",
-			list:           getFilledList([]int{10, 20, 30}),
-			expectedValues: []int{30, 20, 10},
+			name:     "Reverse a list of size 2",
+			list:     getFilledList([]int{10, 20}),
+			expected: expected{values: []int{20, 10}},
+		},
+		{
+			name:     "Reverse a list of size 3",
+			list:     getFilledList([]int{10, 20, 30}),
+			expected: expected{values: []int{30, 20, 10}},
 		},
 	}
-	for _, tc := range testCases {
+	for i, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.reverse()
-			assertValues(t, tc.expectedValues, getValues(tc.list))
-			assertPointer(t, tc.list.head, tc.list.tail.next)
+			assertValues(t, tc.expected.values, getValues(tc.list))
+			if i != 0 {
+				assertPointer(t, tc.list.head, tc.list.tail.next)
+			}
 		})
 	}
 }
