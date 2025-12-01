@@ -134,66 +134,82 @@ func TestDelete(t *testing.T) {
 	testCases := []struct {
 		name string
 		list
-		size           uint
-		index          uint
-		expectedValues []int
+		index uint
+		expected
 	}{
 		{
-			name:           "Attempt to delete a value from an empty list",
-			list:           list{},
-			size:           0,
-			index:          0,
-			expectedValues: []int{},
+			name:     "Delete from an empty list with an invalid index",
+			list:     list{},
+			index:    1,
+			expected: expected{0, []int{}},
 		},
 		{
-			name:           "Delete a value from a list of size 1 with a valid index",
-			list:           getFilledList([]int{10}),
-			size:           0,
-			index:          0,
-			expectedValues: []int{},
+			name:     "Delete from an empty list at the 0 index",
+			list:     list{},
+			index:    0,
+			expected: expected{0, []int{}},
 		},
 		{
-			name:           "Attempt to delete a value from a list of size 1 with an invalid index",
-			list:           getFilledList([]int{10}),
-			size:           1,
-			index:          1,
-			expectedValues: []int{10},
+			name:     "Delete from a list of size 1 with an invalid index",
+			list:     getFilledList([]int{10}),
+			index:    1,
+			expected: expected{1, []int{10}},
 		},
 		{
-			name:           "Attempt to delete a value from a filled list with an invalid index",
-			list:           getFilledList([]int{10, 20, 30}),
-			size:           3,
-			index:          3,
-			expectedValues: []int{10, 20, 30},
+			name:     "Delete from a list of size 1 at the 0 index",
+			list:     getFilledList([]int{10}),
+			index:    0,
+			expected: expected{0, []int{}},
 		},
 		{
-			name:           "Delete a value from a filled list at the zero index",
-			list:           getFilledList([]int{10, 20, 30}),
-			size:           2,
-			index:          0,
-			expectedValues: []int{20, 30},
+			name:     "Delete from a list of size 2 with an invalid index",
+			list:     getFilledList([]int{10, 20}),
+			index:    2,
+			expected: expected{2, []int{10, 20}},
 		},
 		{
-			name:           "Delete a value from a filled list at the first index",
-			list:           getFilledList([]int{10, 20, 30}),
-			size:           2,
-			index:          1,
-			expectedValues: []int{10, 30},
+			name:     "Delete from a list of size 2 at the 0 index",
+			list:     getFilledList([]int{10, 20}),
+			index:    0,
+			expected: expected{1, []int{20}},
 		},
 		{
-			name:           "Delete a value from a filled list at the second index",
-			list:           getFilledList([]int{10, 20, 30}),
-			size:           2,
-			index:          2,
-			expectedValues: []int{10, 20},
+			name:     "Delete from a list of size 2 at the 1 index",
+			list:     getFilledList([]int{10, 20}),
+			index:    1,
+			expected: expected{1, []int{10}},
+		},
+		{
+			name:     "Delete from a list of size 3 with an invalid index",
+			list:     getFilledList([]int{10, 20, 30}),
+			index:    3,
+			expected: expected{3, []int{10, 20, 30}},
+		},
+		{
+			name:     "Delete from a list of size 3 at the 0 index",
+			list:     getFilledList([]int{10, 20, 30}),
+			index:    0,
+			expected: expected{2, []int{20, 30}},
+		},
+		{
+			name:     "Delete from a list of size 3 at the 1 index",
+			list:     getFilledList([]int{10, 20, 30}),
+			index:    1,
+			expected: expected{2, []int{10, 30}},
+		},
+		{
+			name:     "Delete from a list of size 3 at the 2 index",
+			list:     getFilledList([]int{10, 20, 30}),
+			index:    2,
+			expected: expected{2, []int{10, 20}},
 		},
 	}
 	for i, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.delete(tc.index)
-			assertSize(t, tc.size, tc.list.size)
-			assertValues(t, tc.expectedValues, getValues(tc.list))
-			if i > 1 {
+			assertSize(t, tc.expected.size, tc.list.size)
+			assertValues(t, tc.expected.values, getValues(tc.list))
+			if i != 0 && i != 1 && i != 3 {
 				assertPointer(t, tc.list.head, tc.list.tail.next)
 			}
 		})
