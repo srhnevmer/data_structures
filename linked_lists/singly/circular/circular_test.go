@@ -1,7 +1,6 @@
 package circular
 
 import (
-	"fmt"
 	"slices"
 	"testing"
 )
@@ -339,50 +338,6 @@ func TestReverse(t *testing.T) {
 	}
 }
 
-func getFilledList(values []int) list {
-	l := list{size: uint(len(values))}
-	for i := range values {
-		n := &node{nil, values[i]}
-		switch l.head {
-		case nil:
-			n.next = n
-			l.head, l.tail = n, n
-		default:
-			l.tail.next, n.next = n, l.head
-			l.tail = n
-		}
-	}
-	return l
-}
-
-func TestGetFilledList(t *testing.T) {
-	testCases := []struct {
-		size           uint
-		values         []int
-		expectedValues []int
-	}{
-		{size: 1, values: []int{10}, expectedValues: []int{10}},
-		{size: 2, values: []int{10, 20}, expectedValues: []int{10, 20}},
-		{size: 3, values: []int{10, 20, 30}, expectedValues: []int{10, 20, 30}},
-	}
-	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("Test case number: %d", i+1), func(t *testing.T) {
-			l := getFilledList(tc.values)
-			assertSize(t, tc.size, l.size)
-			assertValues(t, tc.expectedValues, getValues(l))
-			assertPointer(t, l.head, l.tail.next)
-		})
-	}
-}
-
-func getValues(l list) []int {
-	values := make([]int, 0, l.size)
-	for i, curr := uint(0), l.head; i < l.size; i, curr = i+1, curr.next {
-		values = append(values, curr.value)
-	}
-	return values
-}
-
 func assertSize(t testing.TB, want, got uint) {
 	t.Helper()
 	if want != got {
@@ -401,5 +356,61 @@ func assertPointer(t testing.TB, want, got *node) {
 	t.Helper()
 	if want != got {
 		t.Errorf("Expected pointer: [ptr: %p value: %[1]v] got: [ptr: %p value: %[2]v]", want, got)
+	}
+}
+
+func getValues(l list) []int {
+	values := make([]int, 0, l.size)
+	for i, curr := uint(0), l.head; i < l.size; i, curr = i+1, curr.next {
+		values = append(values, curr.value)
+	}
+	return values
+}
+
+func getFilledList(values []int) list {
+	l := list{size: uint(len(values))}
+	for i := range values {
+		n := &node{nil, values[i]}
+		switch l.head {
+		case nil:
+			n.next = n
+			l.head, l.tail = n, n
+		default:
+			l.tail.next, n.next = n, l.head
+			l.tail = n
+		}
+	}
+	return l
+}
+
+func TestGetFilledList(t *testing.T) {
+	testCases := []struct {
+		name   string
+		values []int
+		expected
+	}{
+		{
+			name:     "Create a list whose size is equal to 1",
+			values:   []int{10},
+			expected: expected{1, []int{10}},
+		},
+		{
+			name:     "Create a list whose size is equal to 2",
+			values:   []int{10, 20},
+			expected: expected{2, []int{10, 20}},
+		},
+		{
+			name:     "Create a list whose size is equal to 3",
+			values:   []int{10, 20, 30},
+			expected: expected{3, []int{10, 20, 30}},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			l := getFilledList(tc.values)
+			assertSize(t, tc.expected.size, l.size)
+			assertValues(t, tc.expected.values, getValues(l))
+			assertPointer(t, l.head, l.tail.next)
+		})
 	}
 }
