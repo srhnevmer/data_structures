@@ -239,25 +239,6 @@ func TestReverse(t *testing.T) {
 	}
 }
 
-func getFilledList(values []int) list {
-	l := list{size: uint(len(values))}
-	n := &node{nil, values[0]}
-	values = values[1:]
-	l.head = n
-	for i, curr := 0, l.head; i < len(values); i, curr = i+1, curr.next {
-		curr.next = &node{nil, values[i]}
-	}
-	return l
-}
-
-func getValues(l list) []int {
-	v := make([]int, 0, l.size)
-	for curr := l.head; curr != nil; curr = curr.next {
-		v = append(v, curr.value)
-	}
-	return v
-}
-
 func assertSize(t testing.TB, want, got uint) {
 	t.Helper()
 	if want != got {
@@ -270,4 +251,28 @@ func assertValues(t testing.TB, want, got []int) {
 	if slices.Compare(want, got) != 0 {
 		t.Errorf("Expected values: %v, got: %v", want, got)
 	}
+}
+
+func getValues(l list) []int {
+	v := make([]int, 0, l.size)
+	for curr := l.head; curr != nil; curr = curr.next {
+		v = append(v, curr.value)
+	}
+	return v
+}
+
+func getFilledList(values []int) list {
+	var prev *node
+	l := list{size: uint(len(values))}
+	for i := range values {
+		n := &node{nil, values[i]}
+		switch i {
+		case 0:
+			l.head = n
+		default:
+			prev.next = n
+		}
+		prev = n
+	}
+	return l
 }
