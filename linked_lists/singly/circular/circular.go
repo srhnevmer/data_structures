@@ -80,13 +80,15 @@ func (l *list) search(target int) (uint, bool) {
 }
 
 func (l *list) reverse() {
-	var prev *node
-	curr := l.head
-	for i := uint(0); i < l.size; i++ {
-		next := curr.next
-		curr.next = prev
-		prev, curr = curr, next
+	if l.size != 0 {
+		var prev *node
+		curr := l.head
+		for i := uint(0); i < l.size; i++ {
+			next := curr.next
+			curr.next = prev
+			prev, curr = curr, next
+		}
+		l.head.next = l.tail
+		l.head, l.tail = l.tail, l.head
 	}
-	l.head.next = l.tail
-	l.head, l.tail = l.tail, l.head
 }
