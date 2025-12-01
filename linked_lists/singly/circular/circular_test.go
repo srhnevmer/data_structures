@@ -341,16 +341,17 @@ func TestReverse(t *testing.T) {
 
 func getFilledList(values []int) list {
 	l := list{size: uint(len(values))}
-	n := &node{nil, values[0]}
-	values = values[1:]
-	n.next = n
-	l.head, l.tail = n, n
-
-	for i := 0; i < len(values); i++ {
-		n := &node{l.head, values[i]}
-		l.tail.next, l.tail = n, n
+	for i := range values {
+		n := &node{nil, values[i]}
+		switch l.head {
+		case nil:
+			n.next = n
+			l.head, l.tail = n, n
+		default:
+			l.tail.next, n.next = n, l.head
+			l.tail = n
+		}
 	}
-
 	return l
 }
 
