@@ -39,8 +39,8 @@ func (l *list) delete(index uint) {
 	}
 
 	switch {
-	case index == 0 && l.size == 1:
-		l.head = nil
+	case l.size == 1:
+		l.head.next, l.head = nil, nil
 	case index == 0:
 		target := l.head
 		l.head = target.next
