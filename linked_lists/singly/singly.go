@@ -74,8 +74,7 @@ func (l *list) reverse() {
 	for curr != nil {
 		next := curr.next
 		curr.next = prev
-		prev = curr
-		curr = next
+		prev, curr = curr, next
 	}
 	l.head = prev
 }
