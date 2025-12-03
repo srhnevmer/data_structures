@@ -44,6 +44,7 @@ func (l *list) delete(index uint) {
 
 	switch {
 	case l.size == 1:
+		l.head.next = nil
 		l.head, l.tail = nil, nil
 	case index == 0:
 		target := l.head
@@ -59,8 +60,7 @@ func (l *list) delete(index uint) {
 
 		switch index {
 		case l.size - 1:
-			prev.next = l.head
-			l.tail = prev
+			prev.next, l.tail = l.head, prev
 		default:
 			prev.next = curr.next
 		}
