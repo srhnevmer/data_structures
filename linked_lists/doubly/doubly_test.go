@@ -84,7 +84,7 @@ func TestInsert(t *testing.T) {
 			tc.list.insert(tc.index, tc.value)
 			assertSize(t, tc.size, tc.list.size)
 			assertValues(t, tc.expectedValues, getValues(tc.list))
-			assertValues(t, tc.expectedValuesFromTail, getValuesFromTail(tc.list))
+			assertValues(t, tc.expectedValuesFromTail, getValuesTail(tc.list))
 		})
 	}
 }
@@ -160,7 +160,7 @@ func TestDelete(t *testing.T) {
 			tc.list.delete(tc.index)
 			assertSize(t, tc.size, tc.list.size)
 			assertValues(t, tc.expectedValues, getValues(tc.list))
-			assertValues(t, tc.expectedValuesFromTail, getValuesFromTail(tc.list))
+			assertValues(t, tc.expectedValuesFromTail, getValuesTail(tc.list))
 		})
 	}
 }
@@ -258,7 +258,7 @@ func TestReverse(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			tc.list.reverse()
 			assertValues(t, tc.expectedValues, getValues(tc.list))
-			assertValues(t, tc.expectedValuesFromTail, getValuesFromTail(tc.list))
+			assertValues(t, tc.expectedValuesFromTail, getValuesTail(tc.list))
 		})
 	}
 }
@@ -285,7 +285,7 @@ func getValues(l list) []int {
 	return v
 }
 
-func getValuesFromTail(l list) []int {
+func getValuesTail(l list) []int {
 	curr := l.head
 	v := make([]int, 0, l.size)
 	for curr != nil {
