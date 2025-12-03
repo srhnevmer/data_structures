@@ -17,7 +17,7 @@ func (l *list) insert(index uint, value int) {
 
 	n := &node{nil, nil, value}
 	switch {
-	case l.size == 0:
+	case l.head == nil:
 		n.prev, n.next = n, n
 		l.head, l.tail = n, n
 	case index == 0:
