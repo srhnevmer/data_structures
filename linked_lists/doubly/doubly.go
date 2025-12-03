@@ -29,9 +29,10 @@ func (l *list) insert(index uint, value int) {
 			prev, curr = curr, curr.next
 		}
 
-		if index == l.size {
+		switch index {
+		case l.size:
 			prev.next, n.prev = n, prev
-		} else {
+		default:
 			prev.next, n.prev = n, prev
 			curr.prev, n.next = n, curr
 		}
@@ -58,9 +59,10 @@ func (l *list) delete(index uint) {
 			curr = curr.next
 		}
 
-		if index == l.size-1 {
+		switch index {
+		case l.size - 1:
 			curr.prev.next = nil
-		} else {
+		default:
 			curr.prev.next = curr.next
 			curr.next.prev = curr.prev
 		}
