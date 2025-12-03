@@ -23,16 +23,20 @@ func (l *list) insert(index uint, value int) {
 	case index == 0:
 		n.next = l.head
 		l.tail.next, l.head = n, n
-	case index == l.size:
-		n.next = l.head
-		l.tail.next, l.tail = n, n
 	default:
 		var prev *node
 		curr := l.head
 		for range index {
 			prev, curr = curr, curr.next
 		}
-		n.next, prev.next = prev.next, n
+
+		switch index {
+		case l.size:
+			prev.next, n.next = n, l.head
+			l.tail = n
+		default:
+			prev.next, n.next = n, curr
+		}
 	}
 	l.size++
 }
