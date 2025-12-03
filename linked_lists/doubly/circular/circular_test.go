@@ -19,107 +19,104 @@ func TestInsert(t *testing.T) {
 		value int
 		expected
 	}{
-		// 0
 		{
 			name:     "Attempt to insert a value into an empty list with an invalid index",
 			list:     list{},
 			index:    1,
-			value:    50,
+			value:    10,
 			expected: expected{0, []int{}, []int{}},
 		},
 		{
 			name:     "Insert a value into an empty list at the 0 index",
 			list:     list{},
 			index:    0,
-			value:    50,
-			expected: expected{1, []int{50}, []int{50}},
+			value:    10,
+			expected: expected{1, []int{10}, []int{10}},
 		},
-		// 1
 		{
 			name:     "Attempt to insert a value into a list of size 1 with an invalid index",
 			list:     getFilledList([]int{10}),
 			index:    2,
-			value:    50,
+			value:    20,
 			expected: expected{1, []int{10}, []int{10}},
 		},
 		{
 			name:     "Insert a value into a list of size 1 at the 0 index",
 			list:     getFilledList([]int{10}),
 			index:    0,
-			value:    50,
-			expected: expected{2, []int{50, 10}, []int{10, 50}},
+			value:    20,
+			expected: expected{2, []int{20, 10}, []int{10, 20}},
 		},
 		{
 			name:     "Insert a value into a list of size 1 at the 1 index",
 			list:     getFilledList([]int{10}),
 			index:    1,
-			value:    50,
-			expected: expected{2, []int{10, 50}, []int{50, 10}},
+			value:    20,
+			expected: expected{2, []int{10, 20}, []int{20, 10}},
 		},
 		// 2
 		{
 			name:     "Attempt to insert a value into a list of size 2 with an invalid index",
 			list:     getFilledList([]int{10, 20}),
 			index:    3,
-			value:    50,
+			value:    30,
 			expected: expected{2, []int{10, 20}, []int{20, 10}},
 		},
 		{
 			name:     "Insert a value into a list of size 2 at the 0 index",
 			list:     getFilledList([]int{10, 20}),
 			index:    0,
-			value:    50,
-			expected: expected{3, []int{50, 10, 20}, []int{20, 10, 50}},
+			value:    30,
+			expected: expected{3, []int{30, 10, 20}, []int{20, 10, 30}},
 		},
 		{
 			name:     "Insert a value into a list of size 2 at the 1 index",
 			list:     getFilledList([]int{10, 20}),
 			index:    1,
-			value:    50,
-			expected: expected{3, []int{10, 50, 20}, []int{20, 50, 10}},
+			value:    30,
+			expected: expected{3, []int{10, 30, 20}, []int{20, 30, 10}},
 		},
 		{
 			name:     "Insert a value into a list of size 2 at the 2 index",
 			list:     getFilledList([]int{10, 20}),
 			index:    2,
-			value:    50,
-			expected: expected{3, []int{10, 20, 50}, []int{50, 20, 10}},
+			value:    30,
+			expected: expected{3, []int{10, 20, 30}, []int{30, 20, 10}},
 		},
-		// 3
 		{
 			name:     "Attempt to insert a value into a list of size 3 with an invalid index",
 			list:     getFilledList([]int{10, 20, 30}),
 			index:    4,
-			value:    50,
+			value:    40,
 			expected: expected{3, []int{10, 20, 30}, []int{30, 20, 10}},
 		},
 		{
 			name:     "Insert a value into a list of size 3 at the 0 index",
 			list:     getFilledList([]int{10, 20, 30}),
 			index:    0,
-			value:    50,
-			expected: expected{4, []int{50, 10, 20, 30}, []int{30, 20, 10, 50}},
+			value:    40,
+			expected: expected{4, []int{40, 10, 20, 30}, []int{30, 20, 10, 40}},
 		},
 		{
 			name:     "Insert a value into a list of size 3 at the 1 index",
 			list:     getFilledList([]int{10, 20, 30}),
 			index:    1,
-			value:    50,
-			expected: expected{4, []int{10, 50, 20, 30}, []int{30, 20, 50, 10}},
+			value:    40,
+			expected: expected{4, []int{10, 40, 20, 30}, []int{30, 20, 40, 10}},
 		},
 		{
 			name:     "Insert a value into a list of size 3 at the 2 index",
 			list:     getFilledList([]int{10, 20, 30}),
 			index:    2,
-			value:    50,
-			expected: expected{4, []int{10, 20, 50, 30}, []int{30, 50, 20, 10}},
+			value:    40,
+			expected: expected{4, []int{10, 20, 40, 30}, []int{30, 40, 20, 10}},
 		},
 		{
 			name:     "Insert a value into a list of size 3 at the 3 index",
 			list:     getFilledList([]int{10, 20, 30}),
 			index:    3,
-			value:    50,
-			expected: expected{4, []int{10, 20, 30, 50}, []int{50, 30, 20, 10}},
+			value:    40,
+			expected: expected{4, []int{10, 20, 30, 40}, []int{40, 30, 20, 10}},
 		},
 	}
 	for i, tc := range testCases {
@@ -143,7 +140,6 @@ func TestDelete(t *testing.T) {
 		index uint
 		expected
 	}{
-		// 0
 		{
 			name:     "Delete from an empty list with an invalid index",
 			list:     list{},
@@ -156,7 +152,6 @@ func TestDelete(t *testing.T) {
 			index:    0,
 			expected: expected{0, []int{}, []int{}},
 		},
-		// 1
 		{
 			name:     "Delete from a list of size 1 with an invalid index",
 			list:     getFilledList([]int{10}),
@@ -169,7 +164,6 @@ func TestDelete(t *testing.T) {
 			index:    0,
 			expected: expected{0, []int{}, []int{}},
 		},
-		// 2
 		{
 			name:     "Delete from a list of size 2 with an invalid index",
 			list:     getFilledList([]int{10, 20}),
@@ -188,7 +182,6 @@ func TestDelete(t *testing.T) {
 			index:    1,
 			expected: expected{1, []int{10}, []int{10}},
 		},
-		// 3
 		{
 			name:     "Delete from a list of size 3 with an invalid index",
 			list:     getFilledList([]int{10, 20, 30}),
@@ -278,7 +271,7 @@ func TestSearch(t *testing.T) {
 		{
 			name:     "Search in a list of size 3 but a value doesn't exist",
 			list:     getFilledList([]int{10, 20, 30}),
-			target:   50,
+			target:   40,
 			expected: expected{0, false},
 		},
 		{
