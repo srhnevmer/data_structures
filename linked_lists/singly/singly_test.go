@@ -221,7 +221,7 @@ func TestSearch(t *testing.T) {
 		expected
 	}{
 		{
-			name:     "Search in an empty list but a value doesn't exist",
+			name:     "Search in an empty list and a value doesn't exist.",
 			list:     list{},
 			target:   10,
 			expected: expected{0, false},
