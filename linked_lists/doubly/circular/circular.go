@@ -69,7 +69,8 @@ func (l *list) delete(index uint) {
 			curr.prev.next, l.head.prev = l.head, curr.prev
 			l.tail = curr.prev
 		default:
-			curr.prev.next, curr.next.prev = curr.next, curr.prev
+			curr.prev.next = curr.next
+			curr.next.prev = curr.prev
 		}
 		curr.prev, curr.next = nil, nil
 	}
