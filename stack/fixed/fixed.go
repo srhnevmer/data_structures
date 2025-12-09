@@ -40,3 +40,11 @@ func (s *stack) getSize() int {
 	}
 	return s.size + 1
 }
+
+func (s *stack) isEmpty() bool {
+	return s.size == -1
+}
+
+func (s *stack) isFull() bool {
+	return s.size == max-1
+}
