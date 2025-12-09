@@ -2,6 +2,11 @@ package fixed
 
 import "testing"
 
+type expected struct {
+	size      int
+	container [max]int
+}
+
 func TestPeek(t *testing.T) {
 	type expected struct {
 		value  int
@@ -57,10 +62,6 @@ func TestPeek(t *testing.T) {
 }
 
 func TestPush(t *testing.T) {
-	type expected struct {
-		size      int
-		container [5]int
-	}
 	testCases := []struct {
 		name string
 		stack
@@ -114,6 +115,66 @@ func TestPush(t *testing.T) {
 				t.Errorf("Expected result: %v got: %v", want, got)
 			}
 		})
+	}
+}
+
+func TestPop(t *testing.T) {
+	testCases := []struct {
+		name string
+		stack
+		expected
+	}{
+		{
+			name:     "Attempt to pop a value from an empty stack",
+			stack:    initStack(),
+			expected: expected{-1, [max]int{}},
+		},
+		{
+			name:     "Pop a value from a stack of size 1",
+			stack:    getFilledStack([]int{10}),
+			expected: expected{-1, [max]int{}},
+		},
+		{
+			name:     "Pop a value from a stack of size 2",
+			stack:    getFilledStack([]int{10, 20}),
+			expected: expected{0, [max]int{10}},
+		},
+		{
+			name:     "Pop a value from a stack of size 3",
+			stack:    getFilledStack([]int{10, 20, 30}),
+			expected: expected{1, [max]int{10, 20}},
+		},
+		{
+			name:     "Pop a value from a stack of size 4",
+			stack:    getFilledStack([]int{10, 20, 30, 40}),
+			expected: expected{2, [max]int{10, 20, 30}},
+		},
+		{
+			name:     "Pop a value from a stack of size 5",
+			stack:    getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected: expected{3, [max]int{10, 20, 30, 40}},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			tc.stack.pop()
+			assertSize(t, tc.expected.size, tc.stack.size)
+			assertContainer(t, tc.expected.container, tc.stack.container)
+		})
+	}
+}
+
+func assertSize(t testing.TB, want, got int) {
+	t.Helper()
+	if want != got {
+		t.Fatalf("Expected size: %d got: %d", want, got)
+	}
+}
+
+func assertContainer(t testing.TB, want, got [max]int) {
+	t.Helper()
+	if want != got {
+		t.Errorf("Expected result: %v got: %v", want, got)
 	}
 }
 
