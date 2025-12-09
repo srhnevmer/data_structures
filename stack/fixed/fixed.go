@@ -21,3 +21,11 @@ func (s *stack) push(value int) {
 	s.size++
 	s.container[s.size] = value
 }
+
+func (s *stack) pop() {
+	if s.size == -1 {
+		return
+	}
+	s.container[s.size] = 0
+	s.size--
+}
