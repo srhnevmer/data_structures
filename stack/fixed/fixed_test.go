@@ -7,6 +7,11 @@ type expected struct {
 	container [max]int
 }
 
+type expected2 struct {
+	value  int
+	result bool
+}
+
 func TestPeek(t *testing.T) {
 	type expected struct {
 		value  int
@@ -205,6 +210,96 @@ func TestGetSize(t *testing.T) {
 	}
 }
 
+func TestIsEmpty(t *testing.T) {
+	testCases := []struct {
+		name string
+		stack
+		expected2
+	}{
+		{
+			name:      "Check if an empty stack is empty",
+			stack:     initStack(),
+			expected2: expected2{result: true},
+		},
+		{
+			name:      "Check if a stack of size 1 is empty",
+			stack:     getFilledStack([]int{10}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 2 is empty",
+			stack:     getFilledStack([]int{10, 20}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 3 is empty",
+			stack:     getFilledStack([]int{10, 20, 30}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 4 is empty",
+			stack:     getFilledStack([]int{10, 20, 30, 40}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 5 is empty",
+			stack:     getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected2: expected2{result: false},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			r := tc.stack.isEmpty()
+			assertResult(t, tc.expected2.result, r)
+		})
+	}
+}
+
+func TestIsFull(t *testing.T) {
+	testCases := []struct {
+		name string
+		stack
+		expected2
+	}{
+		{
+			name:      "Check if an empty stack is full",
+			stack:     initStack(),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 1 is full",
+			stack:     getFilledStack([]int{10}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 2 is full",
+			stack:     getFilledStack([]int{10, 20}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 3 is full",
+			stack:     getFilledStack([]int{10, 20, 30}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 4 is full",
+			stack:     getFilledStack([]int{10, 20, 30, 40}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 5 is full",
+			stack:     getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected2: expected2{result: true},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			r := tc.stack.isFull()
+			assertResult(t, tc.expected2.result, r)
+		})
+	}
+}
+
 func assertSize(t testing.TB, want, got int) {
 	t.Helper()
 	if want != got {
@@ -216,6 +311,13 @@ func assertContainer(t testing.TB, want, got [max]int) {
 	t.Helper()
 	if want != got {
 		t.Errorf("Expected result: %v got: %v", want, got)
+	}
+}
+
+func assertResult(t testing.TB, want, got bool) {
+	t.Helper()
+	if want != got {
+		t.Errorf("Expected result: %t got: %t", want, got)
 	}
 }
 
