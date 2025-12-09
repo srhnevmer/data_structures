@@ -18,27 +18,27 @@ func TestPeek(t *testing.T) {
 			expected: expected{0, false},
 		},
 		{
-			name:     "Peek a value from a list of size 1",
+			name:     "Peek a value from a stack of size 1",
 			stack:    getFilledStack([]int{10}),
 			expected: expected{10, true},
 		},
 		{
-			name:     "Peek a value from a list of size 2",
+			name:     "Peek a value from a stack of size 2",
 			stack:    getFilledStack([]int{10, 20}),
 			expected: expected{20, true},
 		},
 		{
-			name:     "Peek a value from a list of size 3",
+			name:     "Peek a value from a stack of size 3",
 			stack:    getFilledStack([]int{10, 20, 30}),
 			expected: expected{30, true},
 		},
 		{
-			name:     "Peek a value from a list of size 4",
+			name:     "Peek a value from a stack of size 4",
 			stack:    getFilledStack([]int{10, 20, 30, 40}),
 			expected: expected{40, true},
 		},
 		{
-			name:     "Peek a value from a list of size 5",
+			name:     "Peek a value from a stack of size 5",
 			stack:    getFilledStack([]int{10, 20, 30, 40, 50}),
 			expected: expected{50, true},
 		},
