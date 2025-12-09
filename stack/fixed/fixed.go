@@ -33,3 +33,10 @@ func (s *stack) pop() {
 	s.container[s.size] = 0
 	s.size--
 }
+
+func (s *stack) getSize() int {
+	if s.size == -1 {
+		return s.size
+	}
+	return s.size + 1
+}
