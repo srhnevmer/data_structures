@@ -13,3 +13,11 @@ func (s *stack) peek() (int, bool) {
 	}
 	return s.container[s.size], true
 }
+
+func (s *stack) push(value int) {
+	if max-1 == s.size {
+		return
+	}
+	s.size++
+	s.container[s.size] = value
+}
