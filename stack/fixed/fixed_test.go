@@ -175,7 +175,7 @@ func assertContainer(t testing.TB, want, got [max]int) {
 }
 
 func initStack() stack {
-	return stack{size: -1}
+	return new()
 }
 
 func getFilledStack(values []int) stack {
