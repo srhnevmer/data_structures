@@ -7,6 +7,10 @@ type stack struct {
 	container [max]int
 }
 
+func new() stack {
+	return stack{size: -1}
+}
+
 func (s *stack) peek() (int, bool) {
 	if s.size == -1 {
 		return 0, false
