@@ -160,6 +160,51 @@ func TestPop(t *testing.T) {
 	}
 }
 
+func TestGetSize(t *testing.T) {
+	testCases := []struct {
+		name string
+		stack
+		expected
+	}{
+		{
+			name:     "Get size from an empty stack",
+			stack:    initStack(),
+			expected: expected{size: -1},
+		},
+		{
+			name:     "Get size from a stack of size 1",
+			stack:    getFilledStack([]int{10}),
+			expected: expected{size: 1},
+		},
+		{
+			name:     "Get size from a stack of size 2",
+			stack:    getFilledStack([]int{10, 20}),
+			expected: expected{size: 2},
+		},
+		{
+			name:     "Get size from a stack of size 3",
+			stack:    getFilledStack([]int{10, 20, 30}),
+			expected: expected{size: 3},
+		},
+		{
+			name:     "Get size from a stack of size 4",
+			stack:    getFilledStack([]int{10, 20, 30, 40}),
+			expected: expected{size: 4},
+		},
+		{
+			name:     "Get size from a stack of size 5",
+			stack:    getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected: expected{size: 5},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			s := tc.stack.getSize()
+			assertSize(t, tc.expected.size, s)
+		})
+	}
+}
+
 func assertSize(t testing.TB, want, got int) {
 	t.Helper()
 	if want != got {
