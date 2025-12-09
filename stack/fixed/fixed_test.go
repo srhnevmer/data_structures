@@ -100,7 +100,7 @@ func TestPush(t *testing.T) {
 			expected: expected{4, [max]int{10, 20, 30, 40, 50}},
 		},
 		{
-			name:     "Attempt to add a value into a filled stack",
+			name:     "Attempt to add a value in a filled stack",
 			stack:    getFilledStack([]int{10, 20, 30, 40, 50}),
 			value:    60,
 			expected: expected{4, [max]int{10, 20, 30, 40, 50}},
