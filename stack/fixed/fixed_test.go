@@ -198,8 +198,8 @@ func TestIsEmpty(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			r := tc.stack.isEmpty()
-			assertResult(t, tc.expected2.result, r)
+			result := tc.stack.isEmpty()
+			assertResult(t, tc.expected2.result, result)
 		})
 	}
 }
@@ -243,8 +243,8 @@ func TestIsFull(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			r := tc.stack.isFull()
-			assertResult(t, tc.expected2.result, r)
+			result := tc.stack.isFull()
+			assertResult(t, tc.expected2.result, result)
 		})
 	}
 }
@@ -288,8 +288,8 @@ func TestGetSize(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			s := tc.stack.getSize()
-			assertSize(t, tc.expected.size, s)
+			size := tc.stack.getSize()
+			assertSize(t, tc.expected.size, size)
 		})
 	}
 }
