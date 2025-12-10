@@ -38,3 +38,11 @@ func (s *stack) peek() (int, bool) {
 		return s.head.value, true
 	}
 }
+
+func (s *stack) isEmpty() bool {
+	return s.size == 0
+}
+
+func (s *stack) getSize() uint {
+	return s.size
+}
