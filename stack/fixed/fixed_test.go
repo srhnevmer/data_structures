@@ -70,37 +70,37 @@ func TestPush(t *testing.T) {
 		expected
 	}{
 		{
-			name:     "Add a value in an empty stack",
+			name:     "Push a value in an empty stack",
 			stack:    initStack(),
 			value:    10,
 			expected: expected{0, [max]int{10}},
 		},
 		{
-			name:     "Add a value in a stack of size 1",
+			name:     "Push a value in a stack of size 1",
 			stack:    getFilledStack([]int{10}),
 			value:    20,
 			expected: expected{1, [max]int{10, 20}},
 		},
 		{
-			name:     "Add a value in a stack of size 2",
+			name:     "Push a value in a stack of size 2",
 			stack:    getFilledStack([]int{10, 20}),
 			value:    30,
 			expected: expected{2, [max]int{10, 20, 30}},
 		},
 		{
-			name:     "Add a value in a stack of size 3",
+			name:     "Push a value in a stack of size 3",
 			stack:    getFilledStack([]int{10, 20, 30}),
 			value:    40,
 			expected: expected{3, [max]int{10, 20, 30, 40}},
 		},
 		{
-			name:     "Add a value in a stack of size 4",
+			name:     "Push a value in a stack of size 4",
 			stack:    getFilledStack([]int{10, 20, 30, 40}),
 			value:    50,
 			expected: expected{4, [max]int{10, 20, 30, 40, 50}},
 		},
 		{
-			name:     "Attempt to add a value in a filled stack",
+			name:     "Attempt to push a value in a filled stack",
 			stack:    getFilledStack([]int{10, 20, 30, 40, 50}),
 			value:    60,
 			expected: expected{4, [max]int{10, 20, 30, 40, 50}},
