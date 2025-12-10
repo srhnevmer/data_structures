@@ -10,6 +10,11 @@ type expected struct {
 	values []int
 }
 
+type expected2 struct {
+	value  int
+	result bool
+}
+
 func TestPush(t *testing.T) {
 	testCases := []struct {
 		name string
@@ -103,6 +108,54 @@ func TestPop(t *testing.T) {
 	}
 }
 
+func TestPeek(t *testing.T) {
+	testCases := []struct {
+		name string
+		stack
+		expected2
+	}{
+		{
+			name:      "Attempt to peek a value from an empty stack",
+			stack:     stack{},
+			expected2: expected2{0, false},
+		},
+		{
+			name:      "Peek a value from a stack of size 1",
+			stack:     getFilledStack([]int{10}),
+			expected2: expected2{10, true},
+		},
+		{
+			name:      "Peek a value from a stack of size 2",
+			stack:     getFilledStack([]int{10, 20}),
+			expected2: expected2{20, true},
+		},
+		{
+			name:      "Peek a value from a stack of size 3",
+			stack:     getFilledStack([]int{10, 20, 30}),
+			expected2: expected2{30, true},
+		},
+		{
+			name:      "Peek a value from a stack of size 4",
+			stack:     getFilledStack([]int{10, 20, 30, 40}),
+			expected2: expected2{40, true},
+		},
+		{
+			name:      "Peek a value from a stack of size 5",
+			stack:     getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected2: expected2{50, true},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			val, ok := tc.stack.peek()
+			if want, got := tc.expected2.value, val; want != got {
+				t.Fatalf("Expected value: %d got: %d", want, got)
+			}
+			assertResult(t, tc.expected2.result, ok)
+		})
+	}
+}
+
 func assertSize(t testing.TB, want, got uint) {
 	t.Helper()
 	if want != got {
@@ -114,6 +167,13 @@ func assertValues(t testing.TB, want, got []int) {
 	t.Helper()
 	if slices.Compare(want, got) != 0 {
 		t.Errorf("Expected values: %v got: %v", want, got)
+	}
+}
+
+func assertResult(t testing.TB, want, got bool) {
+	t.Helper()
+	if want != got {
+		t.Errorf("Expected result: %t got: %t", want, got)
 	}
 }
 
