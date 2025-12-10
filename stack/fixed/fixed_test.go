@@ -154,9 +154,7 @@ func TestPeek(t *testing.T) {
 			if want, got := tc.expected2.value, val; want != got {
 				t.Fatalf("Expected value: %d got: %d", want, got)
 			}
-			if want, got := tc.expected2.result, ok; want != got {
-				t.Errorf("Expected result: %t got: %t", want, got)
-			}
+			assertResult(t, tc.expected2.result, ok)
 		})
 	}
 }
