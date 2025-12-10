@@ -57,6 +57,52 @@ func TestPush(t *testing.T) {
 	}
 }
 
+func TestPop(t *testing.T) {
+	testCases := []struct {
+		name string
+		stack
+		expected
+	}{
+		{
+			name:     "Attempt to pop a value from an empty stack",
+			stack:    stack{},
+			expected: expected{0, []int{}},
+		},
+		{
+			name:     "Pop a value from a stack of size 1",
+			stack:    getFilledStack([]int{10}),
+			expected: expected{0, []int{}},
+		},
+		{
+			name:     "Pop a value from a stack of size 2",
+			stack:    getFilledStack([]int{10, 20}),
+			expected: expected{1, []int{10}},
+		},
+		{
+			name:     "Pop a value from a stack of size 3",
+			stack:    getFilledStack([]int{10, 20, 30}),
+			expected: expected{2, []int{20, 10}},
+		},
+		{
+			name:     "Pop a value from a stack of size 4",
+			stack:    getFilledStack([]int{10, 20, 30, 40}),
+			expected: expected{3, []int{30, 20, 10}},
+		},
+		{
+			name:     "Pop a value from a stack of size 5",
+			stack:    getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected: expected{4, []int{40, 30, 20, 10}},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			tc.stack.pop()
+			assertSize(t, tc.expected.size, tc.stack.size)
+			assertValues(t, tc.expected.values, getValues(tc.stack))
+		})
+	}
+}
+
 func assertSize(t testing.TB, want, got uint) {
 	t.Helper()
 	if want != got {
