@@ -29,3 +29,12 @@ func (s *stack) pop() {
 	target.next = nil
 	s.size--
 }
+
+func (s *stack) peek() (int, bool) {
+	switch s.size {
+	case 0:
+		return 0, false
+	default:
+		return s.head.value, true
+	}
+}
