@@ -156,6 +156,96 @@ func TestPeek(t *testing.T) {
 	}
 }
 
+func TestIsEmpty(t *testing.T) {
+	testCases := []struct {
+		name string
+		stack
+		expected2
+	}{
+		{
+			name:      "Check if an empty stack is empty",
+			stack:     stack{},
+			expected2: expected2{result: true},
+		},
+		{
+			name:      "Check if a stack of size 1 is empty",
+			stack:     getFilledStack([]int{10}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 2 is empty",
+			stack:     getFilledStack([]int{10, 20}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 3 is empty",
+			stack:     getFilledStack([]int{10, 20, 30}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 4 is empty",
+			stack:     getFilledStack([]int{10, 20, 30, 40}),
+			expected2: expected2{result: false},
+		},
+		{
+			name:      "Check if a stack of size 5 is empty",
+			stack:     getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected2: expected2{result: false},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			result := tc.stack.isEmpty()
+			assertResult(t, tc.expected2.result, result)
+		})
+	}
+}
+
+func TestGetSize(t *testing.T) {
+	testCases := []struct {
+		name string
+		stack
+		expected
+	}{
+		{
+			name:     "Get size from an empty stack",
+			stack:    stack{},
+			expected: expected{size: 0},
+		},
+		{
+			name:     "Get size from a stack of size 1",
+			stack:    getFilledStack([]int{10}),
+			expected: expected{size: 1},
+		},
+		{
+			name:     "Get size from a stack of size 2",
+			stack:    getFilledStack([]int{10, 20}),
+			expected: expected{size: 2},
+		},
+		{
+			name:     "Get size from a stack of size 3",
+			stack:    getFilledStack([]int{10, 20, 30}),
+			expected: expected{size: 3},
+		},
+		{
+			name:     "Get size from a stack of size 4",
+			stack:    getFilledStack([]int{10, 20, 30, 40}),
+			expected: expected{size: 4},
+		},
+		{
+			name:     "Get size from a stack of size 5",
+			stack:    getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected: expected{size: 5},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			size := tc.stack.getSize()
+			assertSize(t, tc.expected.size, size)
+		})
+	}
+}
+
 func assertSize(t testing.TB, want, got uint) {
 	t.Helper()
 	if want != got {
