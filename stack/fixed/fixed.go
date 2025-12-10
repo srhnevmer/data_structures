@@ -28,10 +28,12 @@ func (s *stack) pop() {
 }
 
 func (s *stack) peek() (int, bool) {
-	if s.size == -1 {
+	switch s.size {
+	case -1:
 		return 0, false
+	default:
+		return s.container[s.size], true
 	}
-	return s.container[s.size], true
 }
 
 func (s *stack) isEmpty() bool {
