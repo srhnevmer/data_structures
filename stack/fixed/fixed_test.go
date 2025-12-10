@@ -12,56 +12,6 @@ type expected2 struct {
 	result bool
 }
 
-func TestPeek(t *testing.T) {
-	testCases := []struct {
-		name string
-		stack
-		expected2
-	}{
-		{
-			name:      "Attempt to peek a value from an empty stack",
-			stack:     initStack(),
-			expected2: expected2{0, false},
-		},
-		{
-			name:      "Peek a value from a stack of size 1",
-			stack:     getFilledStack([]int{10}),
-			expected2: expected2{10, true},
-		},
-		{
-			name:      "Peek a value from a stack of size 2",
-			stack:     getFilledStack([]int{10, 20}),
-			expected2: expected2{20, true},
-		},
-		{
-			name:      "Peek a value from a stack of size 3",
-			stack:     getFilledStack([]int{10, 20, 30}),
-			expected2: expected2{30, true},
-		},
-		{
-			name:      "Peek a value from a stack of size 4",
-			stack:     getFilledStack([]int{10, 20, 30, 40}),
-			expected2: expected2{40, true},
-		},
-		{
-			name:      "Peek a value from a stack of size 5",
-			stack:     getFilledStack([]int{10, 20, 30, 40, 50}),
-			expected2: expected2{50, true},
-		},
-	}
-	for _, tc := range testCases {
-		t.Run(tc.name, func(t *testing.T) {
-			val, ok := tc.stack.peek()
-			if want, got := tc.expected2.value, val; want != got {
-				t.Fatalf("Expected value: %d got: %d", want, got)
-			}
-			if want, got := tc.expected2.result, ok; want != got {
-				t.Errorf("Expected result: %t got: %t", want, got)
-			}
-		})
-	}
-}
-
 func TestPush(t *testing.T) {
 	testCases := []struct {
 		name string
@@ -161,47 +111,52 @@ func TestPop(t *testing.T) {
 	}
 }
 
-func TestGetSize(t *testing.T) {
+func TestPeek(t *testing.T) {
 	testCases := []struct {
 		name string
 		stack
-		expected
+		expected2
 	}{
 		{
-			name:     "Get size from an empty stack",
-			stack:    initStack(),
-			expected: expected{size: -1},
+			name:      "Attempt to peek a value from an empty stack",
+			stack:     initStack(),
+			expected2: expected2{0, false},
 		},
 		{
-			name:     "Get size from a stack of size 1",
-			stack:    getFilledStack([]int{10}),
-			expected: expected{size: 1},
+			name:      "Peek a value from a stack of size 1",
+			stack:     getFilledStack([]int{10}),
+			expected2: expected2{10, true},
 		},
 		{
-			name:     "Get size from a stack of size 2",
-			stack:    getFilledStack([]int{10, 20}),
-			expected: expected{size: 2},
+			name:      "Peek a value from a stack of size 2",
+			stack:     getFilledStack([]int{10, 20}),
+			expected2: expected2{20, true},
 		},
 		{
-			name:     "Get size from a stack of size 3",
-			stack:    getFilledStack([]int{10, 20, 30}),
-			expected: expected{size: 3},
+			name:      "Peek a value from a stack of size 3",
+			stack:     getFilledStack([]int{10, 20, 30}),
+			expected2: expected2{30, true},
 		},
 		{
-			name:     "Get size from a stack of size 4",
-			stack:    getFilledStack([]int{10, 20, 30, 40}),
-			expected: expected{size: 4},
+			name:      "Peek a value from a stack of size 4",
+			stack:     getFilledStack([]int{10, 20, 30, 40}),
+			expected2: expected2{40, true},
 		},
 		{
-			name:     "Get size from a stack of size 5",
-			stack:    getFilledStack([]int{10, 20, 30, 40, 50}),
-			expected: expected{size: 5},
+			name:      "Peek a value from a stack of size 5",
+			stack:     getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected2: expected2{50, true},
 		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			s := tc.stack.getSize()
-			assertSize(t, tc.expected.size, s)
+			val, ok := tc.stack.peek()
+			if want, got := tc.expected2.value, val; want != got {
+				t.Fatalf("Expected value: %d got: %d", want, got)
+			}
+			if want, got := tc.expected2.result, ok; want != got {
+				t.Errorf("Expected result: %t got: %t", want, got)
+			}
 		})
 	}
 }
@@ -292,6 +247,51 @@ func TestIsFull(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			r := tc.stack.isFull()
 			assertResult(t, tc.expected2.result, r)
+		})
+	}
+}
+
+func TestGetSize(t *testing.T) {
+	testCases := []struct {
+		name string
+		stack
+		expected
+	}{
+		{
+			name:     "Get size from an empty stack",
+			stack:    initStack(),
+			expected: expected{size: -1},
+		},
+		{
+			name:     "Get size from a stack of size 1",
+			stack:    getFilledStack([]int{10}),
+			expected: expected{size: 1},
+		},
+		{
+			name:     "Get size from a stack of size 2",
+			stack:    getFilledStack([]int{10, 20}),
+			expected: expected{size: 2},
+		},
+		{
+			name:     "Get size from a stack of size 3",
+			stack:    getFilledStack([]int{10, 20, 30}),
+			expected: expected{size: 3},
+		},
+		{
+			name:     "Get size from a stack of size 4",
+			stack:    getFilledStack([]int{10, 20, 30, 40}),
+			expected: expected{size: 4},
+		},
+		{
+			name:     "Get size from a stack of size 5",
+			stack:    getFilledStack([]int{10, 20, 30, 40, 50}),
+			expected: expected{size: 5},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			s := tc.stack.getSize()
+			assertSize(t, tc.expected.size, s)
 		})
 	}
 }
