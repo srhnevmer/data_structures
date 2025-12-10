@@ -19,3 +19,13 @@ func (s *stack) push(value int) {
 	}
 	s.size++
 }
+
+func (s *stack) pop() {
+	if s.size == 0 {
+		return
+	}
+	target := s.head
+	s.head = target.next
+	target.next = nil
+	s.size--
+}
