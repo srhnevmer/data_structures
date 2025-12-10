@@ -11,13 +11,6 @@ func new() stack {
 	return stack{size: -1}
 }
 
-func (s *stack) peek() (int, bool) {
-	if s.size == -1 {
-		return 0, false
-	}
-	return s.container[s.size], true
-}
-
 func (s *stack) push(value int) {
 	if max-1 == s.size {
 		return
@@ -34,11 +27,11 @@ func (s *stack) pop() {
 	s.size--
 }
 
-func (s *stack) getSize() int {
+func (s *stack) peek() (int, bool) {
 	if s.size == -1 {
-		return s.size
+		return 0, false
 	}
-	return s.size + 1
+	return s.container[s.size], true
 }
 
 func (s *stack) isEmpty() bool {
@@ -47,4 +40,11 @@ func (s *stack) isEmpty() bool {
 
 func (s *stack) isFull() bool {
 	return s.size == max-1
+}
+
+func (s *stack) getSize() int {
+	if s.size == -1 {
+		return s.size
+	}
+	return s.size + 1
 }
