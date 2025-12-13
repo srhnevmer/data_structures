@@ -1,0 +1,24 @@
+package fixed
+
+const max = 5
+
+type queue struct {
+	head, tail int
+	container  [max]int
+}
+
+func new() queue {
+	return queue{head: -1, tail: -1}
+}
+
+func (q *queue) enqueue(value int) {
+	if q.tail == max-1 {
+		return
+	}
+
+	if q.head == -1 {
+		q.head++
+	}
+	q.tail++
+	q.container[q.tail] = value
+}
