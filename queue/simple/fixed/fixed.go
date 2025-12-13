@@ -22,3 +22,14 @@ func (q *queue) enqueue(value int) {
 	q.tail++
 	q.container[q.tail] = value
 }
+
+func (q *queue) dequeue() {
+	switch q.head {
+	case -1:
+		return
+	case q.tail:
+		q.head, q.tail = -1, -1
+	default:
+		q.head++
+	}
+}
