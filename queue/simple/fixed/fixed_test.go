@@ -7,6 +7,10 @@ type expected struct {
 	container  [max]int
 }
 
+type expected2 struct {
+	result bool
+}
+
 func TestEnqueue(t *testing.T) {
 	testCases := []struct {
 		name string
@@ -199,6 +203,96 @@ func TestPeek(t *testing.T) {
 	}
 }
 
+func TestIsEmpty(t *testing.T) {
+	testCases := []struct {
+		name string
+		queue
+		expected2
+	}{
+		{
+			name:      "Check if an empty queue is empty",
+			queue:     initQueue(),
+			expected2: expected2{true},
+		},
+		{
+			name:      "Check if a queue of size 1 is empty",
+			queue:     getFilledQueue([]int{10}),
+			expected2: expected2{false},
+		},
+		{
+			name:      "Check if a queue of size 2 is empty",
+			queue:     getFilledQueue([]int{10, 20}),
+			expected2: expected2{false},
+		},
+		{
+			name:      "Check if a queue of size 3 is empty",
+			queue:     getFilledQueue([]int{10, 20, 30}),
+			expected2: expected2{false},
+		},
+		{
+			name:      "Check if a queue of size 4 is empty",
+			queue:     getFilledQueue([]int{10, 20, 30, 40}),
+			expected2: expected2{false},
+		},
+		{
+			name:      "Check if a queue of size 5 is empty",
+			queue:     getFilledQueue([]int{10, 20, 30, 40, 50}),
+			expected2: expected2{false},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			result := tc.queue.isEmpty()
+			assertResult(t, tc.expected2.result, result)
+		})
+	}
+}
+
+func TestIsFull(t *testing.T) {
+	testCases := []struct {
+		name string
+		queue
+		expected2
+	}{
+		{
+			name:      "Check if an empty queue is full",
+			queue:     initQueue(),
+			expected2: expected2{false},
+		},
+		{
+			name:      "Check if a queue of size 1 is full",
+			queue:     getFilledQueue([]int{10}),
+			expected2: expected2{false},
+		},
+		{
+			name:      "Check if a queue of size 2 is full",
+			queue:     getFilledQueue([]int{10, 20}),
+			expected2: expected2{false},
+		},
+		{
+			name:      "Check if a queue of size 3 is full",
+			queue:     getFilledQueue([]int{10, 20, 30}),
+			expected2: expected2{false},
+		},
+		{
+			name:      "Check if a queue of size 4 is full",
+			queue:     getFilledQueue([]int{10, 20, 30, 40}),
+			expected2: expected2{false},
+		},
+		{
+			name:      "Check if a queue of size 5 is full",
+			queue:     getFilledQueue([]int{10, 20, 30, 40, 50}),
+			expected2: expected2{true},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			result := tc.queue.isFull()
+			assertResult(t, tc.expected2.result, result)
+		})
+	}
+}
+
 func initQueue() queue {
 	return new()
 }
@@ -226,5 +320,12 @@ func assertValues(t testing.TB, want, got [max]int) {
 	t.Helper()
 	if want != got {
 		t.Errorf("Expected values: %v got: %v", want, got)
+	}
+}
+
+func assertResult(t testing.TB, want, got bool) {
+	t.Helper()
+	if want != got {
+		t.Errorf("Expected result: %t got: %t", want, got)
 	}
 }
