@@ -33,3 +33,12 @@ func (q *queue) dequeue() {
 		q.head++
 	}
 }
+
+func (q *queue) peek() int {
+	switch q.head {
+	case -1:
+		return 0
+	default:
+		return q.container[q.head]
+	}
+}
