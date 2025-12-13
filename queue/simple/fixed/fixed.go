@@ -42,3 +42,11 @@ func (q *queue) peek() int {
 		return q.container[q.head]
 	}
 }
+
+func (q *queue) isEmpty() bool {
+	return q.head == -1
+}
+
+func (q *queue) isFull() bool {
+	return q.tail == max-1
+}
