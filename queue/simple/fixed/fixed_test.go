@@ -61,6 +61,52 @@ func TestEnqueue(t *testing.T) {
 	}
 }
 
+func TestDequeue(t *testing.T) {
+	testCases := []struct {
+		name string
+		queue
+		expected
+	}{
+		{
+			name:     "Attempt to dequeue a value from an empty queue",
+			queue:    initQueue(),
+			expected: expected{head: -1, tail: -1},
+		},
+		{
+			name:     "Dequeue a value from a queue of size 1",
+			queue:    getFilledQueue([]int{10}),
+			expected: expected{head: -1, tail: -1},
+		},
+		{
+			name:     "Dequeue a value from a queue of size 2",
+			queue:    getFilledQueue([]int{10, 20}),
+			expected: expected{head: 1, tail: 1},
+		},
+		{
+			name:     "Dequeue a value from a queue of size 3",
+			queue:    getFilledQueue([]int{10, 20, 30}),
+			expected: expected{head: 1, tail: 2},
+		},
+		{
+			name:     "Dequeue a value from a queue of size 4",
+			queue:    getFilledQueue([]int{10, 20, 30, 40}),
+			expected: expected{head: 1, tail: 3},
+		},
+		{
+			name:     "Dequeue a value from a queue of size 5",
+			queue:    getFilledQueue([]int{10, 20, 30, 40, 50}),
+			expected: expected{head: 1, tail: 4},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			tc.queue.dequeue()
+			assertIndex(t, "head", tc.expected.head, tc.queue.head)
+			assertIndex(t, "tail", tc.expected.tail, tc.queue.tail)
+		})
+	}
+}
+
 func initQueue() queue {
 	return new()
 }
