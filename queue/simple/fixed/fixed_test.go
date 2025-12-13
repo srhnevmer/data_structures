@@ -107,6 +107,98 @@ func TestDequeue(t *testing.T) {
 	}
 }
 
+func TestPeek(t *testing.T) {
+	type expected struct {
+		value int
+	}
+	testCases := []struct {
+		name string
+		queue
+		count int
+		expected
+	}{
+		{
+			name:     "Attempt to peek a value from an empty queue",
+			queue:    initQueue(),
+			count:    0,
+			expected: expected{0},
+		},
+		{
+			name:     "Peek a value from a queue of size 1",
+			queue:    getFilledQueue([]int{10}),
+			count:    0,
+			expected: expected{10},
+		},
+		{
+			name:     "Peek a value from a queue of size 2",
+			queue:    getFilledQueue([]int{10, 20}),
+			count:    0,
+			expected: expected{10},
+		},
+		{
+			name:     "Peek a value from a queue of size 3",
+			queue:    getFilledQueue([]int{10, 20, 30}),
+			count:    0,
+			expected: expected{10},
+		},
+		{
+			name:     "Peek a value from a queue of size 4",
+			queue:    getFilledQueue([]int{10, 20, 30, 40}),
+			count:    0,
+			expected: expected{10},
+		},
+		{
+			name:     "Peek a value from a queue of size 5",
+			queue:    getFilledQueue([]int{10, 20, 30, 40, 50}),
+			count:    0,
+			expected: expected{10},
+		},
+		{
+			name:     "[Prev op dequeue]Peek a value from a queue of size 1",
+			queue:    getFilledQueue([]int{10}),
+			count:    1,
+			expected: expected{0},
+		},
+		{
+			name:     "[Prev op dequeue]Peek a value from a queue of size 2",
+			queue:    getFilledQueue([]int{10, 20}),
+			count:    1,
+			expected: expected{20},
+		},
+		{
+			name:     "[Prev op dequeue]Peek a value from a queue of size 3",
+			queue:    getFilledQueue([]int{10, 20, 30}),
+			count:    2,
+			expected: expected{30},
+		},
+		{
+			name:     "[Prev op dequeue]Peek a value from a queue of size 4",
+			queue:    getFilledQueue([]int{10, 20, 30, 40}),
+			count:    3,
+			expected: expected{40},
+		},
+		{
+			name:     "[Prev op dequeue]Peek a value from a queue of size 5",
+			queue:    getFilledQueue([]int{10, 20, 30, 40, 50}),
+			count:    4,
+			expected: expected{50},
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			if tc.count != 0 {
+				for range tc.count {
+					tc.dequeue()
+				}
+			}
+			value := tc.queue.peek()
+			if want, got := tc.expected.value, value; want != got {
+				t.Errorf("Expected value: %d got: %v", want, got)
+			}
+		})
+	}
+}
+
 func initQueue() queue {
 	return new()
 }
